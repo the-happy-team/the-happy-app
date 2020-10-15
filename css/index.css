@@ -1,0 +1,40 @@
+.index-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.index-title {
+  padding: 10px 0;
+  font-family: Megrim;
+  font-size: 46px;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: var(--color-happy);
+  color: var(--color-bg);
+}
+
+.index-text {
+  padding: 30px;
+  color: var(--color-text);
+  font-family: Exo2;
+  font-size: 16px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.index-button-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.index-button {
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-image: url(../assets/images/logo-round.png);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  width: 25%;
+  padding-bottom: 25%;
+}

@@ -6,28 +6,23 @@
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>The Happy App</title>
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/index.css">
   </head>
   <body>
-    <div id="my-cam-container" class="cam-container">
-      <video id="my-cam" class="cam" autoplay muted playsinline></video>
-      <div id="my-graph-container" class="graph-container"></div>
-      <canvas id="my-snapshot" class="snapshot"></canvas>
-      <canvas id="my-snapshot-labeled" class="snapshot"></canvas>
-      <canvas id="my-snapshot-bw" class="snapshot"></canvas>
-      <canvas id="my-screenshot" class="snapshot"></canvas>
-      <canvas id="my-scaled-overlay" class="overlay"></canvas>
+    <div class="index-container">
+      <div class="index-title">The Happy App</div>
+
+      <div class="index-text">
+        This app does not keep your photos or information.<br><br>
+        I will only receive your emotions graph without any user identification for artistic purposes.<br><br>
+        Click here if you are ok and want to proceed:
+      </div>
+
+      <div class="index-button-container">
+        <a href="./camera.html"><div class="index-button"></div></a>
+      </div>
+
     </div>
-    <div class="photo-delay">
-      <span class="input-text">Tirar foto a cada: </span>
-      <input type="text" id="my-delay-input" class="delay-input">
-      <span class="input-text">segundos</span>
-    </div>
-    <div class="button-container">
-      <div id="start-button" class="button hide">Iniciar Camera</div>
-      <div id="load-button" class="button hide">Analisar Arquivos</div>
-      <div id="save-button" class="button hide">Baixar Fotos</div>
-    </div>
-    <div id="my-photo-counter" class="photo-counter">0 fotos</div>
   </body>
   <script type="text/javascript" src="./js/index.js"></script>
 </html>

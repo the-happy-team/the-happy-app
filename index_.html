@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <title>Happy APP!</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/index_.css">
+  </head>
+  <body>
+    <div id="my-cam-container" class="cam-container">
+      <video id="my-cam" class="cam" autoplay muted playsinline></video>
+
+      <canvas id="my-snapshot" class="snapshot"></canvas>
+      <canvas id="my-snapshot-labeled" class="snapshot"></canvas>
+      <canvas id="my-snapshot-bw" class="snapshot"></canvas>
+      <canvas id="my-screenshot" class="snapshot"></canvas>
+      <canvas id="my-scaled-overlay" class="overlay"></canvas>
+    </div>
+    <div class="photo-delay">
+      <span class="input-text">Tirar foto a cada: </span>
+      <input type="text" id="my-delay-input" class="delay-input">
+      <span class="input-text">segundos</span>
+    </div>
+    <div class="button-container">
+      <div id="start-button" class="button hide">Iniciar Camera</div>
+      <div id="load-button" class="button hide">Analisar Arquivos</div>
+      <div id="save-button" class="button hide">Baixar Fotos</div>
+    </div>
+    <div id="my-photo-counter" class="photo-counter">0 fotos</div>
+  </body>
+  <script type="text/javascript" src="./js/index_.js"></script>
+</html>
