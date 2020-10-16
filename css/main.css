@@ -38,6 +38,11 @@ html, body {
   padding: 0;
 }
 
+.main-container {
+  width: 100vw;
+  height: 100vh;
+}
+
 .main-text {
   padding: 30px;
   color: var(--color-text);
