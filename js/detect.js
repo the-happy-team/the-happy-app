@@ -3,8 +3,6 @@ const faceapi = require('face-api.js');
 const path = require('path');
 const moment = require('moment');
 
-//const { setupCanvases, updateCanvases, saveCanvases } = require('./ioUtils');
-
 const CAM = {
   WIDTH: 1280,
   HEIGHT: 720
