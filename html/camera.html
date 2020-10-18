@@ -16,7 +16,6 @@
           <video id="my-video" class="video" autoplay muted playsinline></video>
         </div>
         <canvas id="my-snapshot" class="snapshot"></canvas>
-        <canvas id="my-snapshot-labeled" class="snapshot"></canvas>
         <canvas id="my-snapshot-bw" class="snapshot"></canvas>
         <canvas id="my-screenshot" class="snapshot"></canvas>
       </div>
@@ -27,10 +26,11 @@
 
       <div class="camera-button-container">
         <div id="my-camera-start-button" class="camera-button">start the app</div>
+        <div id="my-camera-stop-button" class="camera-button hide">stop the app</div>
       </div>
 
       <a href='./index.html'>back</a>
-      <div id="my-photo-counter">0</div>
+      <div id="my-photo-counter"></div>
     </div>
   </body>
   <script type="text/javascript" src="../js/camera.js"></script>

@@ -15,15 +15,14 @@ window.feelingsCounter = {};
 const snapshotCanvas = document.getElementById('my-snapshot');
 const snapshotCanvasCtx = snapshotCanvas.getContext('2d');
 
-const snapshotLbCanvas = document.getElementById('my-snapshot-labeled');
-const snapshotLbCanvasCtx = snapshotLbCanvas.getContext('2d');
-
 const snapshotBwCanvas = document.getElementById('my-snapshot-bw');
 const snapshotBwCanvasCtx = snapshotBwCanvas.getContext('2d');
 
 const screenshotCanvas = document.getElementById('my-screenshot');
 const screenshotCanvasCtx = screenshotCanvas.getContext('2d');
 
+const myStartButton = document.getElementById('my-camera-start-button');
+const myStopButton = document.getElementById('my-camera-stop-button')
 const myCounterDiv = document.getElementById('my-photo-counter');
 
 function resetPhotoCounter() {
@@ -34,15 +33,12 @@ function resetPhotoCounter() {
 function setupCanvases(width, height) {
   snapshotCanvas.width = width;
   snapshotCanvas.height = height;
-  snapshotLbCanvas.width = width;
-  snapshotLbCanvas.height = height;
   snapshotBwCanvas.width = width;
   snapshotBwCanvas.height = height;
 }
 
 function clearCanvases() {
   snapshotCanvasCtx.clearRect(0, 0, snapshotCanvas.width, snapshotCanvas.height);
-  snapshotLbCanvasCtx.clearRect(0, 0, snapshotLbCanvas.width, snapshotLbCanvas.height);
   snapshotBwCanvasCtx.clearRect(0, 0, snapshotBwCanvas.width, snapshotBwCanvas.height);
   screenshotCanvasCtx.clearRect(0, 0, screenshotCanvas.width, screenshotCanvas.height);
 }
@@ -77,17 +73,27 @@ function updateBwCanvas() {
 function updateCanvases() {
   clearCanvases();
   snapshotCanvasCtx.drawImage(window.camera, 0, 0);
-  snapshotLbCanvasCtx.drawImage(snapshotCanvas, 0, 0);
   updateBwCanvas();
   updateScreenshotCanvas();
 }
 
-document.getElementById('my-camera-start-button').addEventListener('click', () => {
+myStartButton.addEventListener('click', () => {
   window.appRunning = true;
+
+  myStartButton.classList.add('hide');
+  myStopButton.classList.remove('hide');
 
   resetPhotoCounter();
   setOutDir();
   setTimeout(detectFace, 100);
 
   // TODO: with delay, redraw page
+}, false);
+
+
+myStopButton.addEventListener('click', () => {
+  window.appRunning = false;
+  clearCanvases();
+  clearInterval(window.loopID);
+  // TODO: with delay, go to next page
 }, false);

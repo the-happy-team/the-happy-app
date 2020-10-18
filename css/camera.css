@@ -36,3 +36,7 @@
   text-align: center;
   color: var(--color-text);
 }
+
+.camera-button.hide {
+  display: none;
+}
