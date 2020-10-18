@@ -9,18 +9,29 @@
     <link rel="stylesheet" href="../css/camera.css">
   </head>
   <body>
-    <div class="camera-container">
-      <div class="camera-image-container"></div>
+    <div class="main-container camera-container">
+
+      <div class="camera-wrapper">
+        <div id="my-camera-preview-container" class="camera-preview-container">
+          <video id="my-video" class="video" autoplay muted playsinline></video>
+        </div>
+        <canvas id="my-snapshot" class="snapshot"></canvas>
+        <canvas id="my-snapshot-labeled" class="snapshot"></canvas>
+        <canvas id="my-snapshot-bw" class="snapshot"></canvas>
+        <canvas id="my-screenshot" class="snapshot"></canvas>
+      </div>
 
       <div class="main-text camera-text">
         Your camera will take a picture every minute, and your computer will take a screenshot.
       </div>
 
       <div class="camera-button-container">
-        <div id="my-camera-button" class="camera-button">start the app</div>
+        <div id="my-camera-start-button" class="camera-button">start the app</div>
       </div>
 
       <a href='./index.html'>back</a>
+      <div id="my-photo-counter">0</div>
     </div>
   </body>
+  <script type="text/javascript" src="../js/camera.js"></script>
 </html>

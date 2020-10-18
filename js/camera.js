@@ -1,114 +1,74 @@
-const { getAppPath } = require('electron').remote.app;
-const faceapi = require('face-api.js');
-const path = require('path');
-const moment = require('moment');
+const { app, dialog } = require('electron').remote;
+const { createWriteStream, writeFileSync } = require('fs');
+const { setOutDir, getUris } = require('../js/ioUtils');
+const { detectFace } = require('../js/detect');
 
-const { setupCanvases, updateCanvases, saveCanvases } = require('./ioUtils');
+const pathResolve = require('path').resolve;
+const pathJoin = require('path').join;
+const archiver = require('archiver');
 
-const CAM = {
-  WIDTH: 1280,
-  HEIGHT: 720
-};
+window.appRunning = false;
+window.photoCounter = 0;
+window.feelingsCounter = {};
 
-const DELAY = {
-  SHORT: 1e3,
-  LONG: 60e3
-};
+const snapshotCanvas = document.getElementById('my-snapshot');
+const snapshotCanvasCtx = snapshotCanvas.getContext('2d');
 
-const faceapiOptions = new faceapi.SsdMobilenetv1Options({
-  minConfidence: 0.6,
-  maxResults: 100
-});
+const snapshotLbCanvas = document.getElementById('my-snapshot-labeled');
+const snapshotLbCanvasCtx = snapshotLbCanvas.getContext('2d');
 
-let cam;
+const snapshotBwCanvas = document.getElementById('my-snapshot-bw');
+const snapshotBwCanvasCtx = snapshotBwCanvas.getContext('2d');
 
-faceapi.env.monkeyPatch({
-  Canvas: HTMLCanvasElement,
-  Image: HTMLImageElement,
-  ImageData: ImageData,
-  Video: HTMLVideoElement,
-  createCanvasElement: () => document.createElement('canvas'),
-  createImageElement: () => document.createElement('img')
-});
+const screenshotCanvas = document.getElementById('my-screenshot');
+const screenshotCanvasCtx = screenshotCanvas.getContext('2d');
 
-const loadNet = async () => {
-  const detectionNet = faceapi.nets.ssdMobilenetv1;
-  await detectionNet.load(path.join(getAppPath(), 'assets', 'weights'));
-  await faceapi.loadFaceExpressionModel(path.join(getAppPath(), 'assets', 'weights'));
-};
+const myCounterDiv = document.getElementById('my-photo-counter');
 
-const initCamera = async (width, height) => {
-  const video = document.getElementById('my-cam');
-  video.width = width / 2;
-  video.height = height / 2;
+function resetPhotoCounter() {
+  window.photoCounter = 0;
+  myCounterDiv.innerHTML = `${(window.photoCounter)} fotos`;
+}
 
-  const stream = await navigator.mediaDevices.getUserMedia({
-    audio: false,
-    video: {
-      facingMode: 'user',
-      width: width,
-      height: height
-    }
-  });
-  video.srcObject = stream;
+function setupCanvases(width, height) {
+  snapshotCanvas.width = width;
+  snapshotCanvas.height = height;
+  snapshotLbCanvas.width = width;
+  snapshotLbCanvas.height = height;
+  snapshotBwCanvas.width = width;
+  snapshotBwCanvas.height = height;
+}
 
-  return new Promise((resolve) => {
-    video.onloadedmetadata = () => {
-      resolve(video);
-    };
-  });
-};
+function updateCanvases() {
+  snapshotCanvasCtx.clearRect(0, 0, snapshotCanvas.width, snapshotCanvas.height);
+  snapshotCanvasCtx.drawImage(window.camera, 0, 0);
+  snapshotLbCanvasCtx.drawImage(snapshotCanvas, 0, 0);
+  snapshotBwCanvasCtx.drawImage(snapshotCanvas, 0, 0);
 
-const detectFace = async () => {
-  if (!window.appRunning) return;
+  // TODO: get screenshot
 
-  updateCanvases();
-  const result = await faceapi.detectSingleFace(cam, faceapiOptions).withFaceExpressions();
+  const idataSrc = snapshotBwCanvasCtx.getImageData(0, 0, snapshotBwCanvas.width, snapshotBwCanvas.height);
+  const dataSrc = idataSrc.data;
 
-  if(typeof result !== 'undefined') {
-    const resultScaled = faceapi.resizeResults(result, { width: cam.width, height: cam.height });
-    const mTime = parseInt(moment().format('x'));
-
-    saveCanvases(result, resultScaled, faceapi);
-
-    window.feelingsRaw.header.forEach((e) => {
-      const mVal = result.expressions[e];
-      if (mVal < window.feelingsRaw.minVals[e]) window.feelingsRaw.minVals[e] = mVal;
-      if (mVal > window.feelingsRaw.maxVals[e]) window.feelingsRaw.maxVals[e] = mVal;
-      window.feelingsRaw.values[e].push(mVal || mTime);
-    });
-
-    const mExpression = Object.keys(result.expressions).reduce((a, b) => {
-      return (result.expressions[a] > result.expressions[b]) ? a : b;
-    }, -1);
-
-    if(!(mExpression in window.feelingsCounter)) {
-      window.feelingsCounter[mExpression] = 0;
-    }
-    window.feelingsCounter[mExpression] += 1;
-
-    window.loopID = setTimeout(detectFace, DELAY.LONG);
-  } else {
-    window.loopID = setTimeout(detectFace, DELAY.SHORT);
+  for(let i = 0; i < dataSrc.length; i += 4) {
+    const luma = dataSrc[i + 0] * 0.2126 + dataSrc[i + 1] * 0.7152 + dataSrc[i + 2] * 0.0722;
+    dataSrc[i + 0] = dataSrc[i + 1] = dataSrc[i + 2] = luma;
   }
-};
+  snapshotBwCanvasCtx.putImageData(idataSrc, 0, 0);
+}
 
-loadNet().then(() => {
-  console.log('Network has loaded');
-  return initCamera(CAM.WIDTH, CAM.HEIGHT);
-}).then(video => {
-  console.log('Camera was initialized');
-  document.getElementById('start-button').classList.remove('hide');
-  document.getElementById('load-button').classList.remove('hide');
-  setupCanvases(CAM.WIDTH, CAM.HEIGHT);
-  cam = video;
-  const delayInput = document.getElementById('my-delay-input');
-  delayInput.value = DELAY.LONG / 1e3;
+function clearCanvases() {
+  snapshotCanvasCtx.clearRect(0, 0, snapshotCanvas.width, snapshotCanvas.height);
+  snapshotLbCanvasCtx.clearRect(0, 0, snapshotLbCanvas.width, snapshotLbCanvas.height);
+  snapshotBwCanvasCtx.clearRect(0, 0, snapshotBwCanvas.width, snapshotBwCanvas.height);
+}
 
-  delayInput.addEventListener('keyup', function() {
-    const nDelaySec = Math.max(1, parseInt(delayInput.value) || 1);
-    DELAY.LONG = nDelaySec * 1000;
-  });
-});
+document.getElementById('my-camera-start-button').addEventListener('click', () => {
+  window.appRunning = true;
 
-module.exports = { detectFace };
+  resetPhotoCounter();
+  setOutDir();
+  setTimeout(detectFace, 100);
+
+  // TODO: with delay, redraw page
+}, false);
