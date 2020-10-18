@@ -14,17 +14,24 @@
 
 .index-button-container {
   width: 100%;
+}
+
+.index-button-container a {
+  display: block;
+  width: 25%;
   margin: 0 auto;
 }
 
 .index-button {
-  margin: 0 auto;
-  box-sizing: border-box;
-  background-image: url(../assets/images/logo-round.png);
+  background-color: var(--color-happy);
+  background-image: url(../assets/images/logo.svg);
   background-position: center center;
   background-size: contain;
+  background-size: 40%;
   background-repeat: no-repeat;
 
-  width: 25%;
-  padding-bottom: 25%;
+  width: 100%;
+  padding-bottom: 100%;
+  box-sizing: border-box;
+  border-radius: 50%;
 }
