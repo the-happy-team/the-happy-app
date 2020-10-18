@@ -1,8 +1,9 @@
 const { app, dialog } = require('electron').remote;
-const { createWriteStream, writeFileSync } = require('fs');
+const { createWriteStream, writeFileSync, unlink } = require('fs');
 const { setOutDir, getUris } = require('../js/ioUtils');
 const { detectFace } = require('../js/detect');
 
+const screenshot = require('screenshot-desktop');
 const pathResolve = require('path').resolve;
 const pathJoin = require('path').join;
 const archiver = require('archiver');
@@ -39,15 +40,31 @@ function setupCanvases(width, height) {
   snapshotBwCanvas.height = height;
 }
 
-function updateCanvases() {
+function clearCanvases() {
   snapshotCanvasCtx.clearRect(0, 0, snapshotCanvas.width, snapshotCanvas.height);
-  snapshotCanvasCtx.drawImage(window.camera, 0, 0);
-  snapshotLbCanvasCtx.drawImage(snapshotCanvas, 0, 0);
-  snapshotBwCanvasCtx.drawImage(snapshotCanvas, 0, 0);
+  snapshotLbCanvasCtx.clearRect(0, 0, snapshotLbCanvas.width, snapshotLbCanvas.height);
+  snapshotBwCanvasCtx.clearRect(0, 0, snapshotBwCanvas.width, snapshotBwCanvas.height);
+  screenshotCanvasCtx.clearRect(0, 0, screenshotCanvas.width, screenshotCanvas.height);
+}
 
-  // TODO: get screenshot
+function updateScreenshotCanvas() {
+  screenshot({
+    format: 'png',
+    filename: `${getUris().outFilePath}_tmp_screenshot.png`
+  }).then((imgPath) => {
+    const mSreenShot = new Image();
+    mSreenShot.onload = () => {
+      screenshotCanvas.width = mSreenShot.width / 2;
+      screenshotCanvas.height = mSreenShot.height / 2;
+      screenshotCanvasCtx.drawImage(mSreenShot, 0, 0, screenshotCanvas.width, screenshotCanvas.height);
+      unlink(imgPath, () => {});
+    };
+    mSreenShot.src = imgPath;
+  });
+}
 
-  const idataSrc = snapshotBwCanvasCtx.getImageData(0, 0, snapshotBwCanvas.width, snapshotBwCanvas.height);
+function updateBwCanvas() {
+  const idataSrc = snapshotCanvasCtx.getImageData(0, 0, snapshotCanvas.width, snapshotCanvas.height);
   const dataSrc = idataSrc.data;
 
   for(let i = 0; i < dataSrc.length; i += 4) {
@@ -57,10 +74,12 @@ function updateCanvases() {
   snapshotBwCanvasCtx.putImageData(idataSrc, 0, 0);
 }
 
-function clearCanvases() {
-  snapshotCanvasCtx.clearRect(0, 0, snapshotCanvas.width, snapshotCanvas.height);
-  snapshotLbCanvasCtx.clearRect(0, 0, snapshotLbCanvas.width, snapshotLbCanvas.height);
-  snapshotBwCanvasCtx.clearRect(0, 0, snapshotBwCanvas.width, snapshotBwCanvas.height);
+function updateCanvases() {
+  clearCanvases();
+  snapshotCanvasCtx.drawImage(window.camera, 0, 0);
+  snapshotLbCanvasCtx.drawImage(snapshotCanvas, 0, 0);
+  updateBwCanvas();
+  updateScreenshotCanvas();
 }
 
 document.getElementById('my-camera-start-button').addEventListener('click', () => {
