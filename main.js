@@ -11,6 +11,8 @@ function createWindow () {
     win = new BrowserWindow({
       width: 800,
       height: 550,
+      resizable: false,
+      fullScreenable: false,
       webPreferences: {
         nodeIntegration: true
       },
@@ -27,8 +29,6 @@ function createWindow () {
     // Open the DevTools.
     win.webContents.openDevTools();
     win.setMenu(null);
-    win.setResizable(false);
-    win.setFullScreenable(false);
 
     // Emitted when the window is closed.
     win.on('closed', () => {

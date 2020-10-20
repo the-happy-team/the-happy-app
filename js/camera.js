@@ -1,4 +1,4 @@
-const { app, dialog } = require('electron').remote;
+const { app, dialog, getCurrentWindow } = require('electron').remote;
 const { createWriteStream, writeFileSync, unlink } = require('fs');
 const { setOutDir, getUris } = require('../js/ioUtils');
 const { detectFace } = require('../js/detect');
@@ -120,6 +120,8 @@ myStartButton.addEventListener('click', () => {
   setTimeout(detectFace, 100);
 
   // TODO: with delay, redraw page
+
+  getCurrentWindow().setSize(300, 300, true);
 }, false);
 
 
@@ -127,5 +129,8 @@ myStopButton.addEventListener('click', () => {
   window.appRunning = false;
   clearCanvases();
   clearInterval(window.loopID);
+
   // TODO: with delay, go to next page
+
+  getCurrentWindow().setSize(800, 550, true);
 }, false);
