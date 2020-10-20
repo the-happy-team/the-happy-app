@@ -9,8 +9,8 @@ let win;
 function createWindow () {
     // Create the browser window.
     win = new BrowserWindow({
-      width: 315,
-      height: 600,
+      width: 800,
+      height: 550,
       webPreferences: {
         nodeIntegration: true
       },
@@ -26,6 +26,9 @@ function createWindow () {
 
     // Open the DevTools.
     win.webContents.openDevTools();
+    win.setMenu(null);
+    win.setResizable(false);
+    win.setFullScreenable(false);
 
     // Emitted when the window is closed.
     win.on('closed', () => {
