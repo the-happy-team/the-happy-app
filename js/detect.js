@@ -67,12 +67,15 @@ const initCamera = async (width, height) => {
 const detectFace = async () => {
   if (!window.appRunning) return;
 
-  updateCanvases();
+  await updateCanvases();
   const result = await faceapi.detectSingleFace(window.camera, faceapiOptions).withFaceExpressions();
 
   if(typeof result !== 'undefined') {
     const faceBox = new faceapi.draw.DrawBox(result.detection.box, drawOptions);
     const mTime = parseInt(moment().format('x'));
+
+    drawBoxOnBwCanvas(faceBox);
+    drawFaceOnScreenshot(result);
 
     // saveCanvases(result, faceapi);
 

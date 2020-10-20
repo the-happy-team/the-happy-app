@@ -21,6 +21,7 @@ const snapshotBwCanvasCtx = snapshotBwCanvas.getContext('2d');
 const screenshotCanvas = document.getElementById('my-screenshot');
 const screenshotCanvasCtx = screenshotCanvas.getContext('2d');
 
+const myCameraPreview = document.getElementById('my-camera-preview-container');
 const myStartButton = document.getElementById('my-camera-start-button');
 const myStopButton = document.getElementById('my-camera-stop-button')
 const myCounterDiv = document.getElementById('my-photo-counter');
@@ -44,7 +45,7 @@ function clearCanvases() {
 }
 
 function updateScreenshotCanvas() {
-  screenshot({
+  return screenshot({
     format: 'png',
     filename: `${getUris().outFilePath}_tmp_screenshot.png`
   }).then((imgPath) => {
@@ -74,7 +75,33 @@ function updateCanvases() {
   clearCanvases();
   snapshotCanvasCtx.drawImage(window.camera, 0, 0);
   updateBwCanvas();
-  updateScreenshotCanvas();
+  return updateScreenshotCanvas();
+}
+
+function drawBoxOnBwCanvas(faceBox) {
+  faceBox.draw(snapshotBwCanvas);
+}
+
+function drawFaceOnScreenshot(detectionResult) {
+  const mbox = detectionResult.detection.box;
+  const padding = 0.5 * mbox.width;
+  const dims = {
+    src: {},
+    dst: {}
+  };
+
+  dims.src.x = mbox.x - padding;
+  dims.src.y = mbox.y - padding;
+  dims.src.width = mbox.width + 2 * padding;
+  dims.src.height = mbox.height + 2 * padding;
+
+  dims.dst.width = Math.min(dims.src.width, 0.2 * screenshotCanvas.width);
+  dims.dst.height = dims.dst.width * dims.src.height / dims.src.width;
+  dims.dst.x = 0.5 * (screenshotCanvas.width - dims.dst.width);
+  dims.dst.y = 0.5 * (screenshotCanvas.height - dims.dst.height);
+
+  screenshotCanvasCtx.drawImage(snapshotBwCanvas, dims.src.x, dims.src.y, dims.src.width, dims.src.height,
+                                dims.dst.x, dims.dst.y, dims.dst.width, dims.dst.height);
 }
 
 myStartButton.addEventListener('click', () => {
@@ -82,6 +109,11 @@ myStartButton.addEventListener('click', () => {
 
   myStartButton.classList.add('hide');
   myStopButton.classList.remove('hide');
+
+  screenshotCanvas.classList.remove('hide');
+  screenshotCanvas.classList.add('show');
+
+  myCameraPreview.classList.add('hide');
 
   resetPhotoCounter();
   setOutDir();

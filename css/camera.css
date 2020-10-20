@@ -12,6 +12,11 @@
   border: 2px var(--color-happy) solid;
 }
 
+.camera-preview-container.hide {
+  position: absolute;
+  top: -5000px;
+}
+
 .camera-text {
   text-align: center;
 }
@@ -39,4 +44,13 @@
 
 .camera-button.hide {
   display: none;
+}
+
+.snapshot.hide {
+  position: absolute;
+  top: -5000px;
+}
+
+.snapshot.show {
+  width: 100%;
 }
