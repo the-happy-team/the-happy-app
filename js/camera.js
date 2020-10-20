@@ -1,4 +1,4 @@
-const { app, dialog, getCurrentWindow } = require('electron').remote;
+const { ipcRenderer } = require('electron');
 const { createWriteStream, writeFileSync, unlink } = require('fs');
 const { setOutDir, getUris } = require('../js/ioUtils');
 const { detectFace } = require('../js/detect');
@@ -121,7 +121,7 @@ myStartButton.addEventListener('click', () => {
 
   // TODO: with delay, redraw page
 
-  getCurrentWindow().setSize(300, 300, true);
+  ipcRenderer.send('minimize-window');
 }, false);
 
 
@@ -132,5 +132,5 @@ myStopButton.addEventListener('click', () => {
 
   // TODO: with delay, go to next page
 
-  getCurrentWindow().setSize(800, 550, true);
+  ipcRenderer.send('restore-window');
 }, false);

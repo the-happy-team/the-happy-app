@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -6,11 +6,22 @@ const url = require('url');
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
+const WINDOW_SIZE = {
+  BIG: {
+    width: 800,
+    height: 550
+  },
+  SMALL: {
+    width: 300,
+    height: 300
+  }
+}
+
 function createWindow () {
     // Create the browser window.
     win = new BrowserWindow({
-      width: 800,
-      height: 550,
+      width: WINDOW_SIZE.BIG.width,
+      height: WINDOW_SIZE.BIG.height,
       resizable: false,
       fullScreenable: false,
       webPreferences: {
@@ -36,7 +47,14 @@ function createWindow () {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         win = null
-    })
+    });
+
+    ipcMain.on('minimize-window', (event, arg) => {
+        win.setSize(WINDOW_SIZE.SMALL.width, WINDOW_SIZE.SMALL.height, true);
+    });
+    ipcMain.on('restore-window', (event, arg) => {
+        win.setSize(WINDOW_SIZE.BIG.width, WINDOW_SIZE.BIG.height, true);
+    });
 }
 
 // This method will be called when Electron has finished
