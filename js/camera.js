@@ -177,7 +177,9 @@ myStopButton.addEventListener('click', () => {
   clearCanvases();
   clearInterval(window.loopID);
 
-  // TODO: with delay, go to next page
+  writeFileSync(pathJoin(getUris().outDirPath, 'feelings.json'), JSON.stringify(window.feelings), (err) => {
+    if (err) throw err;
+  });
 
-  ipcRenderer.send('restore-window');
+  window.location.replace(`result.html?dir=${getUris().outDirName}`);
 }, false);
