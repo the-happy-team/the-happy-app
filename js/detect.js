@@ -76,19 +76,7 @@ const detectFace = async () => {
 
     drawBoxOnBwCanvas(faceBox);
     drawFaceOnScreenshot(result);
-
-    // saveCanvases(result, faceapi);
-
-    const mExpression = Object.keys(result.expressions).reduce((a, b) => {
-      return (result.expressions[a] > result.expressions[b]) ? a : b;
-    }, -1);
-
-    console.log(mExpression);
-
-    if(!(mExpression in window.feelingsCounter)) {
-      window.feelingsCounter[mExpression] = 0;
-    }
-    window.feelingsCounter[mExpression] += 1;
+    updateFeelings(result);
 
     window.loopID = setTimeout(detectFace, DELAY.LONG);
   } else {

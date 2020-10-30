@@ -1,6 +1,6 @@
 const { ipcRenderer } = require('electron');
 const { createWriteStream, writeFileSync, unlink } = require('fs');
-const { setOutDir, getUris } = require('../js/ioUtils');
+const { setOutDir, getUris, saveCanvasEmotion } = require('../js/ioUtils');
 const { detectFace } = require('../js/detect');
 
 const screenshot = require('screenshot-desktop');
@@ -10,7 +10,12 @@ const archiver = require('archiver');
 
 window.appRunning = false;
 window.photoCounter = 0;
-window.feelingsCounter = {};
+window.feelings = {
+  counter: {},
+  min: {},
+  max: {},
+  values: []
+};
 
 const snapshotCanvas = document.getElementById('my-snapshot');
 const snapshotCanvasCtx = snapshotCanvas.getContext('2d');
@@ -102,6 +107,48 @@ function drawFaceOnScreenshot(detectionResult) {
 
   screenshotCanvasCtx.drawImage(snapshotBwCanvas, dims.src.x, dims.src.y, dims.src.width, dims.src.height,
                                 dims.dst.x, dims.dst.y, dims.dst.width, dims.dst.height);
+}
+
+function updateFeelings(detectionResult) {
+  const mExpression = Object.keys(detectionResult.expressions).reduce((a, b) => {
+    return (detectionResult.expressions[a] > detectionResult.expressions[b]) ? a : b;
+  }, -1);
+
+  console.log(mExpression);
+
+  if(!(mExpression in window.feelings.counter)) {
+    window.feelings.counter[mExpression] = 0;
+  }
+  window.feelings.counter[mExpression] += 1;
+
+  window.feelings.values.push({
+    ...detectionResult.expressions,
+    time: Math.floor(Date.now() / 1000)
+  });
+
+  Object.keys(detectionResult.expressions).forEach(e => {
+    if(!(e in window.feelings.min)) {
+      window.feelings.min[e] = detectionResult.expressions[e];
+    } else if(detectionResult.expressions[e] < window.feelings.min[e]) {
+      window.feelings.min[e] = detectionResult.expressions[e];
+    }
+
+    if(!(e in window.feelings.max)) {
+      window.feelings.max[e] = detectionResult.expressions[e];
+    } else if(detectionResult.expressions[e] > window.feelings.max[e]) {
+      window.feelings.max[e] = detectionResult.expressions[e];
+    }
+  });
+
+  ['happy', 'sad'].forEach(e => {
+    if(window.feelings.max[e] === detectionResult.expressions[e]) {
+      saveCanvasEmotion(screenshotCanvas, e, 'top');
+    }
+
+    if(mExpression === e) {
+      saveCanvasEmotion(screenshotCanvas, e);
+    }
+  });
 }
 
 myStartButton.addEventListener('click', () => {

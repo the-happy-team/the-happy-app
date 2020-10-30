@@ -10,12 +10,14 @@ const outInfo = {};
 function setOutDir() {
   outInfo.outDirName = mDate + '_' + moment().format('HHmmss');
   outInfo.outDirPath = pathJoin(getAppPath(), outInfo.outDirName);
+  mkdirSync(pathJoin(outInfo.outDirPath, 'happy'), { recursive: true });
+  mkdirSync(pathJoin(outInfo.outDirPath, 'sad'), { recursive: true });
 }
 
-function getUris() {
+function getUris(emotion) {
+  emotion = emotion || '';
   outInfo.outFileName = moment().format('YYYYMMDD_HHmmss');
-  outInfo.outFilePath = pathJoin(outInfo.outDirPath, outInfo.outFileName);
-  mkdirSync(outInfo.outDirPath, { recursive: true });
+  outInfo.outFilePath = pathJoin(outInfo.outDirPath, emotion, outInfo.outFileName);
   return outInfo;
 }
 
@@ -34,13 +36,18 @@ function processBase64Image(dataString) {
 
 function saveCanvas(canvas, outFile) {
   const imageBuffer = processBase64Image(canvas.toDataURL('image/png'));
-
   writeFile(outFile, imageBuffer.data, 'binary', (err) => {
     if(err) console.log(err);
   });
 }
 
+function saveCanvasEmotion(canvas, emotion, top) {
+  const outFile = top ? pathJoin(getUris().outDirPath, `${emotion}.png`) : `${getUris(emotion).outFilePath}.png`;
+  saveCanvas(canvas, outFile);
+}
+
 module.exports = {
   setOutDir,
-  getUris
+  getUris,
+  saveCanvasEmotion
 };
