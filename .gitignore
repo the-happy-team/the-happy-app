@@ -1,11 +1,4 @@
 .DS_S*
 node_modules
-*_screen.png
-*_camera.png
-*_labeld.png
-*_scrcam.png
-__*csv
-__*json
-_graph-*.png
 Happy-darwin-x64*
 feelings/
