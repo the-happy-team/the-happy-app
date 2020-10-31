@@ -9,7 +9,7 @@ window.onload = () => {
   const mDir = (new URLSearchParams(window.location.search)).get('dir');
 
   if (mDir) {
-    const filePath = pathJoin(getAppPath(), mDir, 'feelings.json');
+    const filePath = pathJoin(getAppPath(), 'feelings', mDir, 'feelings.json');
     window.feelings = JSON.parse(readFileSync(filePath, 'utf8'));
   }
 }

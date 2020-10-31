@@ -9,7 +9,7 @@ const outInfo = {};
 
 function setOutDir() {
   outInfo.outDirName = mDate + '_' + moment().format('HHmmss');
-  outInfo.outDirPath = pathJoin(getAppPath(), outInfo.outDirName);
+  outInfo.outDirPath = pathJoin(getAppPath(), 'feelings', outInfo.outDirName);
   mkdirSync(pathJoin(outInfo.outDirPath, 'happy'), { recursive: true });
   mkdirSync(pathJoin(outInfo.outDirPath, 'sad'), { recursive: true });
 }
