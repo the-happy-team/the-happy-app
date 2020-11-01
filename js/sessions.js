@@ -26,7 +26,7 @@ window.onload = () => {
   );
 
   if(sessions.length < 1) {
-    window.location.replace('index.html');
+    window.location.replace('camera.html');
   }
 
   sessions.forEach(s => {
