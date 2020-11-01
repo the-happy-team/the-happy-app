@@ -1,10 +1,31 @@
-.index-title {
-  padding: 10px 0;
-  font-family: Megrim;
-  font-size: 46px;
+.index-language-selection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 36px 0;
+}
+
+.index-language {
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.index-title-container {
+  padding: 50px 0;
   text-align: center;
   text-transform: uppercase;
   background-color: var(--color-happy);
+}
+
+.index-welcome {
+  font-family: Exo2;
+  font-size: 26px;
+  padding-bottom: 16px;
+}
+
+.index-title {
+  font-family: Megrim;
+  font-size: 42px;
   color: var(--color-bg);
 }
 
@@ -18,7 +39,7 @@
 
 .index-button-container a {
   display: block;
-  width: 25%;
+  width: 20%;
   margin: 0 auto;
 }
 
@@ -27,11 +48,11 @@
   background-image: url(../assets/images/logo.svg);
   background-position: center center;
   background-size: contain;
-  background-size: 40%;
+  background-size: 50%;
   background-repeat: no-repeat;
 
   width: 100%;
   padding-bottom: 100%;
   box-sizing: border-box;
-  border-radius: 50%;
+  border-radius: 10%;
 }

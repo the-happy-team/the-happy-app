@@ -41,12 +41,12 @@ html, body {
 .main-container {
   width: 100vw;
   height: 100vh;
+  font-family: Exo2;
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 300;
 }
 
 .main-text {
   padding: 30px;
-  color: var(--color-text);
-  font-family: Exo2;
-  font-size: 16px;
-  font-weight: 300;
 }
