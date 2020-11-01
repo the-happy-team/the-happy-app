@@ -6,16 +6,27 @@
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>The Happy App</title>
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/result.css">
   </head>
   <body>
     <div class="main-container result-container">
-      Oi. Resultados.
-      <div class="result-start-new-container">
-        <a href="camera.html">Começar nova sessão</a>
-        <br>
-        <a href="directory.html">Ver todas sessões</a>
+
+      <div class="result-top">
+        <div class="result-title-container">
+          <div class="result-title">The Happy App</div>
+          <div id="my-result-date" class="result-date"></div>
+          <div id="my-result-message" class="result-message"></div>
+        </div>
+        <div class="result-list"></div>
       </div>
+
+      <div class="result-footer">
+        <div class="result-list">
+          <a class="result-button result-restart" href="camera.html">I'm not happy, start again</a>
+          <a class="result-button result-restart" href="sessions.html">See other sessions</a>
+        </div>
+      </div>
+
     </div>
   </body>
   <script type="text/javascript" src="../js/result.js"></script>

@@ -9,12 +9,17 @@ const pathJoin = require('path').join;
 const archiver = require('archiver');
 
 window.appRunning = false;
+window.appStartTime = 0;
+window.appStopTime = 0;
+
 window.photoCounter = 0;
+
 window.feelings = {
   counter: {},
   min: {},
   max: {},
-  values: []
+  values: [],
+  duration: {}
 };
 
 const snapshotCanvas = document.getElementById('my-snapshot');
@@ -153,6 +158,7 @@ function updateFeelings(detectionResult) {
 
 myStartButton.addEventListener('click', () => {
   window.appRunning = true;
+  window.appStartTime = Math.floor(Date.now() / 1000);
 
   myStartButton.classList.add('hide');
   myStopButton.classList.remove('hide');
@@ -174,6 +180,13 @@ myStartButton.addEventListener('click', () => {
 
 myStopButton.addEventListener('click', () => {
   window.appRunning = false;
+  window.appStopTime = Math.floor(Date.now() / 1000);
+  window.feelings.duration = {
+    start: window.appStartTime,
+    stop: window.appStopTime,
+    length: (window.appStopTime - window.appStartTime)
+  };
+
   clearCanvases();
   clearInterval(window.loopID);
 
