@@ -6,15 +6,22 @@
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>The Happy App</title>
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/sessions.css">
   </head>
   <body>
-    <div class="main-container directory-container">
-      <div id="my-directories" class="directories"></div>
-      <div class="directory-start-new-container">
-        <a href="camera.html">Começar nova sessão</a>
+    <div class="main-container sessions-container">
+
+      <div class="sessions-top">
+        <div class="sessions-title">access your previous sessions</div>
+        <div id="my-sessions" class="sessions-list"></div>
+      </div>
+
+      <div class="sessions-footer">
+        <div class="sessions-list">
+          <a class="sessions-button sessions-restart" href="camera.html">I'm not happy, start again</a>
+        </div>
       </div>
     </div>
   </body>
-  <script type="text/javascript" src="../js/directory.js"></script>
+  <script type="text/javascript" src="../js/sessions.js"></script>
 </html>

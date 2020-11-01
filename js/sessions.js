@@ -5,7 +5,7 @@ const { readdirSync, existsSync } = require('fs');
 const pathJoin = require('path').join;
 const moment = require('moment');
 
-const myDirectories = document.getElementById('my-directories');
+const myDirectories = document.getElementById('my-sessions');
 
 window.onload = () => {
   ipcRenderer.send('restore-window');
@@ -21,7 +21,7 @@ window.onload = () => {
     {
       name: dirent.name,
       path: pathJoin(feelingsPath, dirent.name),
-      date: moment(dirent.name, 'YYYYMMDD_HHmmss').format('YYYY/MM/DD HH:mm')
+      date: moment(dirent.name, 'YYYYMMDD_HHmmss').format('MMM Do, YYYY, HH:mm')
     })
   );
 
@@ -33,6 +33,8 @@ window.onload = () => {
     const mA = document.createElement('a');
     mA.innerHTML = s.date;
     mA.setAttribute('href', `result.html?dir=${s.name}`);
+    mA.classList.add('sessions-button');
+    mA.classList.add('sessions-session');
     myDirectories.appendChild(mA);
   });
 }
