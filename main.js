@@ -21,7 +21,7 @@ function createWindow () {
     win = new BrowserWindow({
       width: WINDOW_SIZE.BIG.width,
       height: WINDOW_SIZE.BIG.height,
-      resizable: false,
+      // resizable: false,
       fullScreenable: false,
       webPreferences: {
         nodeIntegration: true
