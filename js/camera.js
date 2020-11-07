@@ -33,12 +33,13 @@ const screenshotCanvasCtx = screenshotCanvas.getContext('2d');
 
 const myCameraPreview = document.getElementById('my-camera-preview-container');
 const myStartButton = document.getElementById('my-camera-start-button');
-const myStopButton = document.getElementById('my-camera-stop-button')
-const myCounterDiv = document.getElementById('my-photo-counter');
+const myStopButton = document.getElementById('my-camera-stop-button');
+const myText = document.getElementById('my-camera-text');
+const myCounter = document.getElementById('my-photo-counter');
 
 function resetPhotoCounter() {
   window.photoCounter = 0;
-  myCounterDiv.innerHTML = `${(window.photoCounter)} fotos`;
+  myCounter.innerHTML = `${(window.photoCounter)} fotos`;
 }
 
 function setupCanvases(width, height) {
@@ -156,6 +157,10 @@ function updateFeelings(detectionResult) {
   });
 }
 
+window.onload = () => {
+  ipcRenderer.send('restore-window');
+}
+
 myStartButton.addEventListener('click', () => {
   window.appRunning = true;
   window.appStartTime = Math.floor(Date.now() / 1000);
@@ -167,6 +172,7 @@ myStartButton.addEventListener('click', () => {
   screenshotCanvas.classList.add('show');
 
   myCameraPreview.classList.add('hide');
+  myText.classList.add('hide');
 
   resetPhotoCounter();
   setOutDir();

@@ -1,15 +1,21 @@
+.camera-container {
+  background-color: var(--color-happy);
+}
+
 .camera-wrapper {
   width: 100%;
+  padding-top: 64px;
 }
 
 .camera-preview-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 240px;
+  width: 73.333vw;
+  height: 73.333vw;
   margin: 0 auto;
+  border: 1px solid var(--color-text);
   overflow: hidden;
-  border: 2px var(--color-happy) solid;
 }
 
 .camera-preview-container.hide {
@@ -32,8 +38,8 @@
   margin: 0 auto;
   padding: 2px 12px 5px;
   border-radius: 5px;
-  
-  background-color: var(--color-happy);
+
+  background-color: var(--color-bg);
   cursor: pointer;
   font-family: Exo2;
   font-size: 16px;
@@ -41,7 +47,9 @@
   color: var(--color-text);
 }
 
-.camera-button.hide {
+.camera-button.hide,
+.camera-text.hide,
+.photo-counter {
   display: none;
 }
 
