@@ -2,9 +2,21 @@
   background-color: var(--color-happy);
 }
 
+.camera-container.running {
+  background-color: var(--color-bg);
+  background-image: linear-gradient(to right, #000, #444);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 .camera-wrapper {
   width: 100%;
   padding-top: 64px;
+}
+
+.camera-wrapper.grow {
+  padding-top: 80vh;
 }
 
 .camera-preview-container {
@@ -47,6 +59,11 @@
   color: var(--color-text);
 }
 
+.camera-button.stop {
+  background-color: var(--color-happy);
+  color: var(--color-text);
+}
+
 .camera-button.hide,
 .camera-text.hide,
 .photo-counter {
@@ -56,8 +73,4 @@
 .snapshot.hide {
   position: absolute;
   top: -5000px;
-}
-
-.snapshot.show {
-  width: 100%;
 }

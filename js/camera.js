@@ -31,7 +31,9 @@ const snapshotBwCanvasCtx = snapshotBwCanvas.getContext('2d');
 const screenshotCanvas = document.getElementById('my-screenshot');
 const screenshotCanvasCtx = screenshotCanvas.getContext('2d');
 
+const appContainer = document.getElementById('my-camera-container');
 const myCameraPreview = document.getElementById('my-camera-preview-container');
+const myCameraWrapper = document.getElementById('my-camera-wrapper');
 const myStartButton = document.getElementById('my-camera-start-button');
 const myStopButton = document.getElementById('my-camera-stop-button');
 const myText = document.getElementById('my-camera-text');
@@ -168,17 +170,14 @@ myStartButton.addEventListener('click', () => {
   myStartButton.classList.add('hide');
   myStopButton.classList.remove('hide');
 
-  screenshotCanvas.classList.remove('hide');
-  screenshotCanvas.classList.add('show');
-
+  appContainer.classList.add('running');
   myCameraPreview.classList.add('hide');
+  myCameraWrapper.classList.add('grow');
   myText.classList.add('hide');
 
   resetPhotoCounter();
   setOutDir();
   setTimeout(detectFace, 100);
-
-  // TODO: with delay, redraw page
 
   ipcRenderer.send('minimize-window');
 }, false);
