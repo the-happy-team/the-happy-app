@@ -21,7 +21,7 @@ window.onload = () => {
   const mMsgDiv = document.getElementById('my-result-message');
 
   const feelingsCount = Object.keys(window.feelings.counter).reduce((s, e) => s + window.feelings.counter[e], 0);
-  const happyCount = window.feelings.counter['happy'];
+  const happyCount = window.feelings.values.reduce((s, e) => s + e.happy, 0);
   const happyPercent = Math.round((happyCount / feelingsCount) * 100) || 0;
 
   const totalTimeSeconds = Math.ceil(window.feelings.duration.length / 10) * 10;
