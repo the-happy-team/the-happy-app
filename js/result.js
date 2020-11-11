@@ -5,6 +5,10 @@ const { readFileSync } = require('fs');
 const pathJoin = require('path').join;
 const moment = require('moment');
 
+const myHappyButton = document.getElementById('my-happiest-button');
+const mySadButton = document.getElementById('my-saddest-button');
+const myContactButton = document.getElementById('my-contact-button');
+
 window.onload = () => {
   ipcRenderer.send('restore-window');
 
@@ -31,3 +35,21 @@ window.onload = () => {
   mDateDiv.innerHTML = moment(mDir, 'YYYYMMDD_HHmmss').format('MMM Do, YYYY, HH:mm');
   mMsgDiv.innerHTML = `In ${totalTime} you were ${happyPercent}% happy`;
 }
+
+
+myHappyButton.addEventListener('click', () => {
+  console.log('hi happy');
+}, false);
+
+mySadButton.addEventListener('click', () => {
+  console.log('hi sad');
+}, false);
+
+myContactButton.addEventListener('click', () => {
+  const mDir = (new URLSearchParams(window.location.search)).get('dir');
+
+  if(!mDir) {
+    window.location.replace('sessions.html');
+  }
+  window.location.replace(`contact.html?dir=${mDir}`);
+}, false);
