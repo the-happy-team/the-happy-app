@@ -1,0 +1,21 @@
+{
+  "welcome": "Bem-vinda ao",
+  "intro": "Este aplicativo não guarda suas fotos ou informações.<br><br>Eu só receberei o seu relatório de emoções, sem identificação, para fins artísticos.<br><br>Clique no botão abaixo se você estiver de acordo e quiser continuar",
+  "sessions": "acesse sessões anteriores",
+  "restart": "Não estou feliz, começar de novo",
+  "email": "email",
+  "message": "mensagem",
+  "send": "enviar",
+  "download-happy": "baixe seu momento mais feliz",
+  "download-sad": "baixe seu momento mais triste",
+  "share-thoughts": "compartilhe sua opinião com a artista",
+  "other-sesions": "Veja outras sessões",
+  "minutes": "minutos",
+  "seconds": "segundos",
+  "in": "Em",
+  "you-were": "você esteve",
+  "happy": "feliz",
+  "camera": "O aplicativo vai gravar uma foto e um screenshot a cada minuto",
+  "start": "começar o aplicativo",
+  "stop": "parar o aplicativo"
+}

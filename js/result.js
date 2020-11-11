@@ -7,6 +7,8 @@ const pathJoin = require('path').join;
 const pathResolve = require('path').resolve;
 const moment = require('moment');
 
+const { translate } = require('../js/translate');
+
 const myHappyButton = document.getElementById('my-happiest-button');
 const mySadButton = document.getElementById('my-saddest-button');
 const myContactButton = document.getElementById('my-contact-button');
@@ -32,10 +34,12 @@ window.onload = () => {
 
   const totalTimeSeconds = Math.ceil(window.feelings.duration.length / 10) * 10;
   const totalTimeMinutes = Math.ceil(window.feelings.duration.length / 60);
-  const totalTime = (totalTimeSeconds > 59) ? `${totalTimeMinutes} minutes` : `${totalTimeSeconds} seconds`;
 
-  mDateDiv.innerHTML = moment(window.mDir, 'YYYYMMDD_HHmmss').format('MMM Do, YYYY, HH:mm');
-  mMsgDiv.innerHTML = `In ${totalTime} you were ${happyPercent}% happy`;
+  const mPhrases = translate();
+  const totalTime = (totalTimeSeconds > 59) ? `${totalTimeMinutes} ${mPhrases.minutes}` : `${totalTimeSeconds} ${mPhrases.seconds}`;
+
+  mDateDiv.innerHTML = moment(window.mDir, 'YYYYMMDD_HHmmss').format('MMMM Do, YYYY, HH:mm');
+  mMsgDiv.innerHTML = `${mPhrases.in} ${totalTime} ${mPhrases['you-were']} ${happyPercent}% ${mPhrases.happy}`;
 }
 
 function saveEmotionImage(e) {

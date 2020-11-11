@@ -1,0 +1,21 @@
+{
+  "welcome": "Welcome to",
+  "intro": "This app does not keep your photos or information.<br><br>I will only receive your emotions report without user identification for artistic purposes.<br><br>Click the button if you are ok and want to proceed",
+  "sessions": "access your previous sessions",
+  "restart": "I'm not happy, start again",
+  "email": "your email",
+  "message": "your message",
+  "send": "send",
+  "download-happy": "download your happiest moment",
+  "download-sad": "download your saddest moment",
+  "share-thoughts": "share your thoughts with the artist",
+  "other-sesions": "See other sessions",
+  "minutes": "minutes",
+  "seconds": "seconds",
+  "in": "In",
+  "you-were": "you were",
+  "happy": "happy",
+  "camera": "The app will take a picture and a screenshot every minute",
+  "start": "start the app",
+  "stop": "stop the app"
+}

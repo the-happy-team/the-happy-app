@@ -5,6 +5,8 @@ const { readdirSync, existsSync } = require('fs');
 const pathJoin = require('path').join;
 const moment = require('moment');
 
+const { translate } = require('../js/translate');
+
 const myDirectories = document.getElementById('my-sessions');
 
 window.onload = () => {
@@ -37,4 +39,6 @@ window.onload = () => {
     mA.classList.add('sessions-session');
     myDirectories.appendChild(mA);
   });
+
+  translate();
 }

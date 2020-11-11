@@ -2,6 +2,7 @@ const { ipcRenderer } = require('electron');
 const { createWriteStream, writeFileSync, unlink } = require('fs');
 const { setOutDir, getUris, saveCanvasEmotion } = require('../js/ioUtils');
 const { detectFace } = require('../js/detect');
+const { translate } = require('../js/translate');
 
 const screenshot = require('screenshot-desktop');
 const pathResolve = require('path').resolve;
@@ -176,6 +177,7 @@ function updateFeelings(detectionResult) {
 
 window.onload = () => {
   ipcRenderer.send('restore-window');
+  translate();
 }
 
 myStartButton.addEventListener('click', () => {

@@ -1,5 +1,7 @@
 const { ipcRenderer } = require('electron');
 
+const { translate } = require('../js/translate');
+
 const mySendButton = document.getElementById('my-send-button');
 const myCancelButton = document.getElementById('my-cancel-button');
 
@@ -9,6 +11,7 @@ window.onload = () => {
   const mEmail = document.getElementById('my-email');
   const mMsgDiv = document.getElementById('my-message');
 
+  translate();
 }
 
 mySendButton.addEventListener('click', () => {

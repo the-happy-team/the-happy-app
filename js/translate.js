@@ -1,0 +1,28 @@
+const { getAppPath } = require('electron').remote.app;
+const { readFileSync } = require('fs');
+const pathJoin = require('path').join;
+
+function setLanguage(lang) {
+  const filePath = pathJoin(getAppPath(), 'assets', 'locales', `${lang}.json`);
+  const mPhrases = readFileSync(filePath, 'utf8');
+  localStorage.setItem('language', lang);
+  localStorage.setItem('phrases', mPhrases);
+  translate();
+}
+
+function translate() {
+  if((localStorage.getItem('language') === null) || (localStorage.getItem('phrases') === null)) {
+    setLanguage(localStorage.getItem('language') || 'en');
+  } else {
+    const mPhrases = JSON.parse(localStorage.getItem('phrases'));
+    document.querySelectorAll('[data-phrase]').forEach(e => {
+      e.innerHTML = mPhrases[e.getAttribute('data-phrase')];
+    });
+  }
+  return JSON.parse(localStorage.getItem('phrases'));
+}
+
+module.exports = {
+  setLanguage,
+  translate
+};
