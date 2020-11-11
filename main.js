@@ -9,7 +9,7 @@ let win;
 const WINDOW_SIZE = {
   BIG: {
     width: 800,
-    height: 550
+    height: 570
   },
   SMALL: {
     width: 300,
