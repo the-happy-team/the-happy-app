@@ -23,7 +23,7 @@ window.onload = () => {
     {
       name: dirent.name,
       path: pathJoin(feelingsPath, dirent.name),
-      date: moment(dirent.name, 'YYYYMMDD_HHmmss').format('MMM Do, YYYY, HH:mm')
+      date: moment(dirent.name, 'YYYYMMDD_HHmmss').format('MMMM Do YYYY HH:mm')
     })
   );
 

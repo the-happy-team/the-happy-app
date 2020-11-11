@@ -14,31 +14,46 @@
 .contact-label {
   margin-bottom: 8px;
   padding: 0 6px;
+  font-weight: 500;
 }
 
 .contact-input {
-  padding: 8px;
+  padding: 4px 8px;
   margin-bottom: 30px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   box-shadow: none;
   outline: none;
   resize: none;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
   color: var(--color-text);
 }
 
 .contact-message {
   height: 220px;
+  padding: 8px;
+  border-radius: 14px;
+}
+
+.contact-button-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 
 .contact-button {
-  padding: 6px 14px 8px;
+  padding: 3px 12px 6px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   align-self: flex-end;
   background-color: var(--color-bg);
   color: var(--color-text);
   cursor: pointer;
+  font-weight: 500;
+}
+
+.contact-button + .contact-button {
+  margin-left: 12px;
 }

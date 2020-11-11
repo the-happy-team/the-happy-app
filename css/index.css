@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 36px 0;
+  padding: 24px 0;
 }
 
 .index-language-button {
@@ -11,7 +11,7 @@
 }
 
 .index-title-container {
-  padding: 50px 0;
+  padding: 44px 0 42px;
   text-align: center;
   text-transform: uppercase;
   background-color: var(--color-happy);
@@ -19,18 +19,21 @@
 
 .index-welcome {
   font-family: Exo2;
-  font-size: 26px;
+  font-size: 21px;
+  font-weight: 500;
   padding-bottom: 16px;
 }
 
 .index-title {
   font-family: Megrim;
-  font-size: 42px;
+  font-size: 35px;
   color: var(--color-bg);
 }
 
 .index-text {
   text-align: center;
+  font-weight: 500;
+  padding: 32px;
 }
 
 .index-button-container {
@@ -39,7 +42,7 @@
 
 .index-button-container a {
   display: block;
-  width: 20%;
+  width: 18.666%;
   margin: 0 auto;
 }
 
@@ -47,7 +50,6 @@
   background-color: var(--color-happy);
   background-image: url(../assets/images/logo.svg);
   background-position: center center;
-  background-size: contain;
   background-size: 50%;
   background-repeat: no-repeat;
 

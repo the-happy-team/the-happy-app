@@ -13,34 +13,38 @@
 .sessions-title {
   text-align: center;
   margin: 12px 0;
+  font-weight: 500;
 }
 
 .sessions-list {
-  width: 75%;
+  width: 82%;
   margin: 0 auto;  
 }
 
 .sessions-button {
   display: block;
   margin: 20px 0;
-  padding: 4px 12px 6px;
+  padding: 4px 8px 6px;
   border-radius: 5px;
 
   background-color: var(--color-happy);
   color: var(--color-text);
   text-decoration: none;
   text-align: center;
+  font-weight: 500;
 }
 
 .sessions-footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 20%;
+  height: 18.2%;
   background-color: var(--color-happy);
 }
 
 .sessions-restart {
+  width: 87%;
+  margin: 0 auto;
   background-color: var(--color-bg);
   color: var(--color-text);  
 }

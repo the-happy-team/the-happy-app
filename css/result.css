@@ -11,50 +11,58 @@
 }
 
 .result-title-container {
-  padding: 0 0 30px;;
+  padding: 0 0 30px;
   text-align: center;
   background-color: var(--color-happy);
 }
 
 .result-title {
-  padding: 40px 0 30px;
+  padding: 35px 0 28px;
   font-family: Megrim;
-  font-size: 42px;
+  font-size: 35px;
   text-transform: uppercase;
   color: var(--color-bg);
 }
 
 .result-date, .result-message {
   font-family: Exo2;
-  font-size: 16px;
+  font-weight: 500;
 }
 
 .result-list {
-  width: 75%;
-  margin: 0 auto;  
+  width: 87%;
+  margin: 12px auto 0;
 }
 
 .result-button {
   display: block;
-  margin: 12px 0;
-  padding: 4px 12px 6px;
+  margin: 30px 0;
+  padding: 4px 8px 6px;
   border-radius: 5px;
 
   background-color: var(--color-happy);
   color: var(--color-text);
   text-decoration: none;
   text-align: center;
+  font-weight: 500;
+  box-sizing: border-box;
 }
 
 .result-footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 20%;
+  height: 18.2%;
   background-color: var(--color-happy);
 }
 
+.result-footer > .result-list {
+  margin: 0 auto;
+}
+
 .result-restart {
+  width: 87%;
+  margin: 10px auto;
   background-color: var(--color-bg);
   color: var(--color-text);
 }
