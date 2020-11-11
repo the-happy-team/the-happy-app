@@ -43,8 +43,11 @@ const loadNet = async () => {
 
 const initCamera = async (width, height) => {
   const video = document.getElementById('my-video');
-  video.width = width / 3;
-  video.height = height / 3;
+  const cameraContainer = document.getElementById('my-camera-preview-container');
+  const scale = Math.min(width / cameraContainer.offsetWidth, height / cameraContainer.offsetHeight);
+
+  video.width = width / scale;
+  video.height = height / scale;
 
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: false,
@@ -58,6 +61,7 @@ const initCamera = async (width, height) => {
   video.srcObject = stream;
   video.onloadedmetadata = () => {
     window.camera = video;
+    cameraContainer.style.backgroundImage = 'none';
   };
 
   setupCanvases(CAM.WIDTH, CAM.HEIGHT);

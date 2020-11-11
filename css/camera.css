@@ -5,8 +5,9 @@
 .camera-container.running {
   background-color: var(--color-bg);
   background-image: linear-gradient(to right, #000, #444);
+  background-image: url(../assets/images/smile_02.jpg);
   background-position: center center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
 }
 
@@ -26,8 +27,11 @@
   width: 73.333vw;
   height: 73.333vw;
   margin: 0 auto;
-  border: 1px solid var(--color-text);
   overflow: hidden;
+  background-image: url(../assets/images/smile_00.jpg);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .camera-preview-container.hide {
