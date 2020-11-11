@@ -1,0 +1,44 @@
+.contact-container {
+  background-color: var(--color-happy);
+}
+
+.contact-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.contact-label {
+  margin-bottom: 8px;
+  padding: 0 6px;
+}
+
+.contact-input {
+  padding: 8px;
+  margin-bottom: 30px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: none;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--color-text);
+}
+
+.contact-message {
+  height: 220px;
+}
+
+.contact-button {
+  padding: 6px 14px 8px;
+  border: none;
+  border-radius: 8px;
+  align-self: flex-end;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+}

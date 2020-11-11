@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <title>The Happy App</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/contact.css">
+  </head>
+  <body>
+    <div class="main-container contact-container">
+
+      <div class="contact-form">
+        <div class="contact-label">your email</div>
+        <input type="email" name="email" id="my-email" class="contact-input">
+
+        <div class="contact-label">your message</div>
+        <textarea name="message" id="my-message" class="contact-input contact-message"></textarea>
+
+        <div id="my-send-button" class="contact-button">send</div>
+        <div id="my-cancel-button" class="contact-button">cancel</div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="../js/contact.js"></script>
+</html>
