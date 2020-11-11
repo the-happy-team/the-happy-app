@@ -6,7 +6,8 @@ const { detectFace } = require('../js/detect');
 const screenshot = require('screenshot-desktop');
 const pathResolve = require('path').resolve;
 const pathJoin = require('path').join;
-const archiver = require('archiver');
+
+const moment = require('moment');
 
 window.appRunning = false;
 window.appStartTime = 0;
@@ -123,6 +124,8 @@ function updateFeelings(detectionResult) {
   }, -1);
 
   console.log(mExpression);
+  const mDate = moment().format('YYYY-MM-DD_HH:mm:ss');
+  const mtime = Math.floor(Date.now() / 1000);
 
   if(!(mExpression in window.feelings.counter)) {
     window.feelings.counter[mExpression] = 0;
@@ -131,25 +134,37 @@ function updateFeelings(detectionResult) {
 
   window.feelings.values.push({
     ...detectionResult.expressions,
-    time: Math.floor(Date.now() / 1000)
+    time: mtime
   });
 
   Object.keys(detectionResult.expressions).forEach(e => {
     if(!(e in window.feelings.min)) {
-      window.feelings.min[e] = detectionResult.expressions[e];
-    } else if(detectionResult.expressions[e] < window.feelings.min[e]) {
-      window.feelings.min[e] = detectionResult.expressions[e];
+      window.feelings.min[e] = {
+        time: mDate,
+        value: detectionResult.expressions[e]
+      };
+    } else if(detectionResult.expressions[e] < window.feelings.min[e].value) {
+      window.feelings.min[e] = {
+        time: mDate,
+        value: detectionResult.expressions[e]
+      };
     }
 
     if(!(e in window.feelings.max)) {
-      window.feelings.max[e] = detectionResult.expressions[e];
-    } else if(detectionResult.expressions[e] > window.feelings.max[e]) {
-      window.feelings.max[e] = detectionResult.expressions[e];
+      window.feelings.max[e] = {
+        time: mDate,
+        value: detectionResult.expressions[e]
+      };
+    } else if(detectionResult.expressions[e] > window.feelings.max[e].value) {
+      window.feelings.max[e] = {
+        time: mDate,
+        value: detectionResult.expressions[e]
+      };
     }
   });
 
   ['happy', 'sad'].forEach(e => {
-    if(window.feelings.max[e] === detectionResult.expressions[e]) {
+    if(window.feelings.max[e].value === detectionResult.expressions[e]) {
       saveCanvasEmotion(screenshotCanvas, e, 'top');
     }
 
