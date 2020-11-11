@@ -6,13 +6,15 @@ const url = require('url');
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
+const mDEBUG = process.env.DEBUG || false;
+
 const WINDOW_SIZE = {
   BIG: {
-    width: 800,
+    width: (mDEBUG) ? 800 : 300,
     height: 570
   },
   SMALL: {
-    width: 300,
+    width: (mDEBUG) ? 800 : 300,
     height: 300
   }
 }
@@ -21,7 +23,7 @@ function createWindow () {
     win = new BrowserWindow({
       width: WINDOW_SIZE.BIG.width,
       height: WINDOW_SIZE.BIG.height,
-      // resizable: false,
+      resizable: (mDEBUG),
       fullScreenable: false,
       webPreferences: {
         nodeIntegration: true
@@ -37,7 +39,7 @@ function createWindow () {
         slashes: true
     }));
 
-    win.webContents.openDevTools();
+    if(mDEBUG) win.webContents.openDevTools();
 
     win.on('closed', () => {
         win = null
