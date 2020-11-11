@@ -1,8 +1,10 @@
-const { getAppPath } = require('electron').remote.app;
+const { dialog } = require('electron').remote;
+const { getAppPath, getPath } = require('electron').remote.app;
 const { ipcRenderer } = require('electron');
-const { readFileSync } = require('fs');
+const { readFileSync, copyFileSync } = require('fs');
 
 const pathJoin = require('path').join;
+const pathResolve = require('path').resolve;
 const moment = require('moment');
 
 const myHappyButton = document.getElementById('my-happiest-button');
@@ -12,13 +14,13 @@ const myContactButton = document.getElementById('my-contact-button');
 window.onload = () => {
   ipcRenderer.send('restore-window');
 
-  const mDir = (new URLSearchParams(window.location.search)).get('dir');
+  window.mDir = (new URLSearchParams(window.location.search)).get('dir');
 
-  if(!mDir) {
+  if(!window.mDir) {
     window.location.replace('sessions.html');
   }
 
-  const filePath = pathJoin(getAppPath(), 'feelings', mDir, 'feelings.json');
+  const filePath = pathJoin(getAppPath(), 'feelings', window.mDir, 'feelings.json');
   window.feelings = JSON.parse(readFileSync(filePath, 'utf8'));
 
   const mDateDiv = document.getElementById('my-result-date');
@@ -32,24 +34,29 @@ window.onload = () => {
   const totalTimeMinutes = Math.ceil(window.feelings.duration.length / 60);
   const totalTime = (totalTimeSeconds > 59) ? `${totalTimeMinutes} minutes` : `${totalTimeSeconds} seconds`;
 
-  mDateDiv.innerHTML = moment(mDir, 'YYYYMMDD_HHmmss').format('MMM Do, YYYY, HH:mm');
+  mDateDiv.innerHTML = moment(window.mDir, 'YYYYMMDD_HHmmss').format('MMM Do, YYYY, HH:mm');
   mMsgDiv.innerHTML = `In ${totalTime} you were ${happyPercent}% happy`;
 }
 
+function saveEmotionImage(e) {
+  const outFileName = `${e}_${window.feelings.max[e].time.replace(/:/g, '')}.png`;
+  const defaultPath = pathResolve(getPath('desktop'), outFileName);
+  const userChosenPath = dialog.showSaveDialogSync({ defaultPath: defaultPath }) || null;
+  const inFilePath = pathJoin(getAppPath(), 'feelings', window.mDir, `${e}.png`);
+
+  if(userChosenPath) {
+    copyFileSync(inFilePath, userChosenPath);
+  }
+}
 
 myHappyButton.addEventListener('click', () => {
-  console.log('hi happy');
+  saveEmotionImage('happy');
 }, false);
 
 mySadButton.addEventListener('click', () => {
-  console.log('hi sad');
+  saveEmotionImage('sad');
 }, false);
 
 myContactButton.addEventListener('click', () => {
-  const mDir = (new URLSearchParams(window.location.search)).get('dir');
-
-  if(!mDir) {
-    window.location.replace('sessions.html');
-  }
-  window.location.replace(`contact.html?dir=${mDir}`);
+  window.location.replace(`contact.html?dir=${window.mDir}`);
 }, false);
