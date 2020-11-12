@@ -1,6 +1,7 @@
 const { ipcRenderer } = require('electron');
 
 const { translate } = require('../js/translate');
+const { post } = require('../js/ioUtils');
 
 const mEmail = document.getElementById('my-email');
 const mMsg = document.getElementById('my-message');
@@ -16,9 +17,15 @@ mySendButton.addEventListener('click', () => {
   mySendButton.classList.add('sending');
   myCancelButton.classList.add('sending');
   // TODO: validate email
-  postMessage({
+
+  const postData = {
     email: mEmail.value,
     message: mMsg.value
+  };
+
+  post(postData, (res) => {
+    console.log(res);
+    myCancelButton.click();
   });
 }, false);
 
@@ -31,18 +38,3 @@ myCancelButton.addEventListener('click', () => {
 
   window.location.replace(`result.html?dir=${mDir}`);
 }, false);
-
-function postMessage(data) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://the-happy-app-api.herokuapp.com/message', true);
-  //xhr.open('POST', 'http://localhost:5005/message', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-
-  xhr.onreadystatechange = () => {
-    if(xhr.readyState == 4 && xhr.status == 200) {
-      console.log(xhr.responseText);
-      myCancelButton.click();
-    }
-  }
-  xhr.send(JSON.stringify(data));
-}

@@ -2,8 +2,10 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; script-src 'self'; connect-src 'self' https://the-happy-app-api.herokuapp.com/ http://localhost:5005;">
+    <meta http-equiv="X-Content-Security-Policy"
+          content="default-src 'self'; script-src 'self'; connect-src 'self' https://the-happy-app-api.herokuapp.com/ http://localhost:5005;">
     <title>The Happy App</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/camera.css">

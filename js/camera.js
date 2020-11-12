@@ -1,6 +1,6 @@
 const { ipcRenderer } = require('electron');
 const { createWriteStream, writeFileSync, unlink } = require('fs');
-const { setOutDir, getUris, saveCanvasEmotion } = require('../js/ioUtils');
+const { setOutDir, getUris, saveCanvasEmotion, post } = require('../js/ioUtils');
 const { detectFace } = require('../js/detect');
 const { translate } = require('../js/translate');
 
@@ -212,9 +212,12 @@ myStopButton.addEventListener('click', () => {
   clearCanvases();
   clearInterval(window.loopID);
 
-  writeFileSync(pathJoin(getUris().outDirPath, 'feelings.json'), JSON.stringify(window.feelings), (err) => {
-    if (err) throw err;
-  });
+  const feelings = JSON.stringify(window.feelings);
+  const postData = { feelings };
 
-  window.location.replace(`result.html?dir=${getUris().outDirName}`);
+  writeFileSync(pathJoin(getUris().outDirPath, 'feelings.json'), feelings);
+  post(postData, (res) => {
+    console.log(res);
+    window.location.replace(`result.html?dir=${getUris().outDirName}`);
+  });
 }, false);

@@ -46,8 +46,26 @@ function saveCanvasEmotion(canvas, emotion, top) {
   saveCanvas(canvas, outFile);
 }
 
+function post(data, cb) {
+  const endpoint = data.hasOwnProperty('feelings') ? 'feelings' : 'message';
+
+  //const url = `http://localhost:5005/${endpoint}`;
+  const url = `https://the-happy-app-api.herokuapp.com/${endpoint}`;
+  const xhr = new XMLHttpRequest();
+
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = () => {
+    if(xhr.readyState == 4 && xhr.status == 200) {
+      if(cb) cb(xhr.responseText);
+    }
+  }
+  xhr.send(JSON.stringify(data));
+}
+
 module.exports = {
   setOutDir,
   getUris,
-  saveCanvasEmotion
+  saveCanvasEmotion,
+  post
 };
