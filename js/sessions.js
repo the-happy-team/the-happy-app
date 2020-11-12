@@ -14,7 +14,7 @@ window.onload = () => {
   const feelingsPath = pathJoin(getAppPath(), 'feelings');
 
   if(!existsSync(feelingsPath)) {
-    window.location.replace('index.html');
+    window.location.replace('camera.html');
   }
 
   const sessions = readdirSync(feelingsPath, { withFileTypes: true })
