@@ -57,3 +57,8 @@
 .contact-button + .contact-button {
   margin-left: 12px;
 }
+
+.contact-button.sending {
+  opacity: .333;
+  pointer-events: none;
+}

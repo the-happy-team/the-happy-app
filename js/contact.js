@@ -2,20 +2,21 @@ const { ipcRenderer } = require('electron');
 
 const { translate } = require('../js/translate');
 
+const mEmail = document.getElementById('my-email');
+const mMsg = document.getElementById('my-message');
 const mySendButton = document.getElementById('my-send-button');
 const myCancelButton = document.getElementById('my-cancel-button');
 
 window.onload = () => {
   ipcRenderer.send('restore-window');
-
-  const mEmail = document.getElementById('my-email');
-  const mMsgDiv = document.getElementById('my-message');
-
   translate();
 }
 
 mySendButton.addEventListener('click', () => {
-  console.log('hi send');
+  console.log(mEmail.value + ' ' + mMsg.value);
+  mySendButton.classList.add('sending');
+  myCancelButton.classList.add('sending');
+  setTimeout(() => myCancelButton.click(), 1000);
 }, false);
 
 myCancelButton.addEventListener('click', () => {
