@@ -13,6 +13,7 @@ before_script:
   - npm install
 
 script:
+  - echo "process.env.E_REC = '$E_REC'; process.env.E_USR = '$E_USR'; process.env.E_PSW = '$E_PSW'; process.env.E_PRT = '$E_PRT';" > env.js
   - npm run pack
 
 before_deploy:

@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron');
+const { createTransport } = require('nodemailer');
 
 const { translate } = require('../js/translate');
 
@@ -13,10 +14,10 @@ window.onload = () => {
 }
 
 mySendButton.addEventListener('click', () => {
-  console.log(mEmail.value + ' ' + mMsg.value);
   mySendButton.classList.add('sending');
   myCancelButton.classList.add('sending');
-  setTimeout(() => myCancelButton.click(), 1000);
+  // TODO: validate email
+  sendEmail(mEmail.value, mMsg.value);
 }, false);
 
 myCancelButton.addEventListener('click', () => {
@@ -28,3 +29,28 @@ myCancelButton.addEventListener('click', () => {
 
   window.location.replace(`result.html?dir=${mDir}`);
 }, false);
+
+
+function sendEmail(from, msg) {
+  const smtpTransport = createTransport({
+    host: 'mail.smtp2go.com',
+    port: process.env.E_PRT,
+    auth: {
+      user: process.env.E_USR,
+      pass: process.env.E_PSW
+    }
+  });
+
+  const mailOptions = {
+    from: `${process.env.E_USR}@smtp2go.com`,
+    to: process.env.E_REC,
+    replyTo: `${from}`,
+    subject: '[THE-HAPPY-APP] contact',
+    text: `${msg}`
+  };
+
+  smtpTransport.sendMail(mailOptions, (error, response) => {
+    if(error) console.log(error);
+    else myCancelButton.click();
+  });
+}
