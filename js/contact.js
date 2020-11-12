@@ -8,15 +8,25 @@ const mMsg = document.getElementById('my-message');
 const mySendButton = document.getElementById('my-send-button');
 const myCancelButton = document.getElementById('my-cancel-button');
 
+function checkInputs() {
+  if(mEmail.checkValidity() && mMsg.checkValidity()) {
+    mySendButton.classList.remove('sending');
+  } else {
+    mySendButton.classList.add('sending');
+  }
+}
+
 window.onload = () => {
   ipcRenderer.send('restore-window');
   translate();
+  mMsg.addEventListener('keyup', checkInputs);
+  mEmail.addEventListener('keyup', checkInputs);
+  mEmail.addEventListener('blur', mEmail.reportValidity);
 }
 
 mySendButton.addEventListener('click', () => {
   mySendButton.classList.add('sending');
   myCancelButton.classList.add('sending');
-  // TODO: validate email
 
   const postData = {
     email: mEmail.value,
