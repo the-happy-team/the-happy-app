@@ -1,5 +1,4 @@
 const { ipcRenderer } = require('electron');
-const { createTransport } = require('nodemailer');
 
 const { translate } = require('../js/translate');
 
@@ -17,7 +16,10 @@ mySendButton.addEventListener('click', () => {
   mySendButton.classList.add('sending');
   myCancelButton.classList.add('sending');
   // TODO: validate email
-  sendEmail(mEmail.value, mMsg.value);
+  postMessage({
+    email: mEmail.value,
+    message: mMsg.value
+  });
 }, false);
 
 myCancelButton.addEventListener('click', () => {
@@ -30,27 +32,17 @@ myCancelButton.addEventListener('click', () => {
   window.location.replace(`result.html?dir=${mDir}`);
 }, false);
 
+function postMessage(data) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://the-happy-app-api.herokuapp.com/message', true);
+  //xhr.open('POST', 'http://localhost:5005/message', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
 
-function sendEmail(from, msg) {
-  const smtpTransport = createTransport({
-    host: 'mail.smtp2go.com',
-    port: process.env.E_PRT,
-    auth: {
-      user: process.env.E_USR,
-      pass: process.env.E_PSW
+  xhr.onreadystatechange = () => {
+    if(xhr.readyState == 4 && xhr.status == 200) {
+      console.log(xhr.responseText);
+      myCancelButton.click();
     }
-  });
-
-  const mailOptions = {
-    from: `${process.env.E_USR}@smtp2go.com`,
-    to: process.env.E_REC,
-    replyTo: `${from}`,
-    subject: '[THE-HAPPY-APP] contact',
-    text: `${msg}`
-  };
-
-  smtpTransport.sendMail(mailOptions, (error, response) => {
-    if(error) console.log(error);
-    else myCancelButton.click();
-  });
+  }
+  xhr.send(JSON.stringify(data));
 }

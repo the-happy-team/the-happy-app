@@ -1,6 +1,4 @@
-require('./env');
-
-const {app, BrowserWindow, ipcMain} = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 
