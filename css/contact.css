@@ -37,10 +37,12 @@
 }
 
 .contact-button-container {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .contact-button {
@@ -52,6 +54,7 @@
   color: var(--color-text);
   cursor: pointer;
   font-weight: 500;
+  transition: opacity .1s linear;
 }
 
 .contact-button + .contact-button {
@@ -59,6 +62,11 @@
 }
 
 .contact-button.sending {
-  opacity: .333;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-button.disable {
+  opacity: 0.333;
   pointer-events: none;
 }

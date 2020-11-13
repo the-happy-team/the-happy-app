@@ -7,12 +7,13 @@ const mEmail = document.getElementById('my-email');
 const mMsg = document.getElementById('my-message');
 const mySendButton = document.getElementById('my-send-button');
 const myCancelButton = document.getElementById('my-cancel-button');
+const myLoader = document.getElementById('my-loader-container');
 
 function checkInputs() {
   if(mEmail.checkValidity() && mMsg.checkValidity()) {
-    mySendButton.classList.remove('sending');
+    mySendButton.classList.remove('disable');
   } else {
-    mySendButton.classList.add('sending');
+    mySendButton.classList.add('disable');
   }
 }
 
@@ -27,6 +28,7 @@ window.onload = () => {
 mySendButton.addEventListener('click', () => {
   mySendButton.classList.add('sending');
   myCancelButton.classList.add('sending');
+  myLoader.classList.add('sending');
 
   const postData = {
     email: mEmail.value,

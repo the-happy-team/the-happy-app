@@ -38,6 +38,7 @@ const myCameraPreview = document.getElementById('my-camera-preview-container');
 const myCameraWrapper = document.getElementById('my-camera-wrapper');
 const myStartButton = document.getElementById('my-camera-start-button');
 const myStopButton = document.getElementById('my-camera-stop-button');
+const myLoader = document.getElementById('my-loader-container');
 const myText = document.getElementById('my-camera-text');
 const myCounter = document.getElementById('my-photo-counter');
 
@@ -120,6 +121,9 @@ function drawFaceOnScreenshot(detectionResult) {
 }
 
 function updateFeelings(detectionResult) {
+  myStopButton.classList.remove('hide');
+  myLoader.classList.remove('sending');
+
   const mExpression = Object.keys(detectionResult.expressions).reduce((a, b) => {
     return (detectionResult.expressions[a] > detectionResult.expressions[b]) ? a : b;
   }, -1);
@@ -185,7 +189,7 @@ myStartButton.addEventListener('click', () => {
   window.appStartTime = Math.floor(Date.now() / 1000);
 
   myStartButton.classList.add('hide');
-  myStopButton.classList.remove('hide');
+  myLoader.classList.add('sending');
 
   appContainer.classList.add('running');
   myCameraPreview.classList.add('hide');
@@ -199,8 +203,10 @@ myStartButton.addEventListener('click', () => {
   ipcRenderer.send('minimize-window');
 }, false);
 
-
 myStopButton.addEventListener('click', () => {
+  myStopButton.classList.add('sending');
+  myLoader.classList.add('sending');
+
   window.appRunning = false;
   window.appStopTime = Math.floor(Date.now() / 1000);
   window.feelings.duration = {

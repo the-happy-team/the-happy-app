@@ -50,3 +50,30 @@ html, body {
 .main-text {
   padding: 30px;
 }
+
+.loader-container {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .15s linear;
+}
+
+.loader-container.sending {
+  opacity: 1;
+}
+
+.loader {
+  margin: 0 auto;
+  border: 3px solid var(--color-bg);
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1.15s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
