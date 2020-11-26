@@ -75,7 +75,15 @@
   pointer-events: none;
 }
 
-.camera-button.hide,
+.camera-button.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.camera-button.remove {
+  display: none;
+}
+
 .camera-text.hide,
 .photo-counter {
   display: none;

@@ -121,8 +121,8 @@ function drawFaceOnScreenshot(detectionResult) {
 }
 
 function updateFeelings(detectionResult) {
-  myStopButton.classList.remove('hide');
   myLoader.classList.remove('sending');
+  myStopButton.classList.remove('hide');
 
   const mExpression = Object.keys(detectionResult.expressions).reduce((a, b) => {
     return (detectionResult.expressions[a] > detectionResult.expressions[b]) ? a : b;
@@ -188,8 +188,11 @@ myStartButton.addEventListener('click', () => {
   window.appRunning = true;
   window.appStartTime = Math.floor(Date.now() / 1000);
 
-  myStartButton.classList.add('hide');
-  myLoader.classList.add('sending');
+  myStartButton.classList.add('remove');
+  setTimeout(() => {
+    myStopButton.classList.remove('remove');
+    myLoader.classList.add('sending');
+  }, 500);
 
   appContainer.classList.add('running');
   myCameraPreview.classList.add('hide');
