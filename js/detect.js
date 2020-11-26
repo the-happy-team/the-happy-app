@@ -62,6 +62,10 @@ const initCamera = async (width, height) => {
   video.onloadedmetadata = () => {
     window.camera = video;
     cameraContainer.style.backgroundImage = 'none';
+
+    setTimeout(() => {
+      document.getElementById('my-camera-start-button').classList.remove('hide');
+    }, 500);
   };
 
   setupCanvases(CAM.WIDTH, CAM.HEIGHT);
