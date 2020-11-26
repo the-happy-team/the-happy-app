@@ -7,7 +7,7 @@ const pathJoin = require('path').join;
 const pathResolve = require('path').resolve;
 const moment = require('moment');
 
-const { translate } = require('../js/translate');
+const { translate, getDateFormatString } = require('../js/translate');
 
 const myHappyButton = document.getElementById('my-happiest-button');
 const mySadButton = document.getElementById('my-saddest-button');
@@ -15,6 +15,7 @@ const myContactButton = document.getElementById('my-contact-button');
 
 window.onload = () => {
   ipcRenderer.send('restore-window');
+  const mDateFormat = getDateFormatString(moment);
 
   window.mDir = (new URLSearchParams(window.location.search)).get('dir');
 
@@ -38,7 +39,7 @@ window.onload = () => {
   const mPhrases = translate();
   const totalTime = (totalTimeSeconds > 59) ? `${totalTimeMinutes} ${mPhrases.minutes}` : `${totalTimeSeconds} ${mPhrases.seconds}`;
 
-  mDateDiv.innerHTML = moment(window.mDir, 'YYYYMMDD_HHmmss').format('MMMM Do, YYYY, HH:mm');
+  mDateDiv.innerHTML = moment(window.mDir, 'YYYYMMDD_HHmmss').format(mDateFormat);
   mMsgDiv.innerHTML = `${mPhrases.in} ${totalTime} ${mPhrases['you-were']} ${happyPercent}% ${mPhrases.happy}`;
 }
 

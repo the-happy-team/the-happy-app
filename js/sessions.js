@@ -5,12 +5,14 @@ const { readdirSync, existsSync } = require('fs');
 const pathJoin = require('path').join;
 const moment = require('moment');
 
-const { translate } = require('../js/translate');
+const { translate, getDateFormatString } = require('../js/translate');
 
 const myDirectories = document.getElementById('my-sessions');
 
 window.onload = () => {
   ipcRenderer.send('restore-window');
+  const mDateFormat = getDateFormatString(moment);
+
   const feelingsPath = pathJoin(getAppPath(), 'feelings');
 
   if(!existsSync(feelingsPath)) {
@@ -23,7 +25,7 @@ window.onload = () => {
     {
       name: dirent.name,
       path: pathJoin(feelingsPath, dirent.name),
-      date: moment(dirent.name, 'YYYYMMDD_HHmmss').format('MMMM Do YYYY HH:mm')
+      date: moment(dirent.name, 'YYYYMMDD_HHmmss').format(mDateFormat)
     })
   );
 

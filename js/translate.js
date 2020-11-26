@@ -22,7 +22,22 @@ function translate() {
   return JSON.parse(localStorage.getItem('phrases'));
 }
 
+function getDateFormatString(momemnt) {
+  if((localStorage.getItem('language') === null) || (localStorage.getItem('phrases') === null)) {
+    setLanguage(localStorage.getItem('language') || 'en');
+  }
+  const mLanguage = localStorage.getItem('language');
+  moment.locale(mLanguage);
+
+  if(mLanguage === 'pt') {
+    return 'D [de] MMMM, YYYY, HH:mm';
+  } else {
+    return 'MMMM Do, YYYY, HH:mm';
+  }
+}
+
 module.exports = {
   setLanguage,
+  getDateFormatString,
   translate
 };
