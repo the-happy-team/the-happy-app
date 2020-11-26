@@ -43,7 +43,8 @@ window.onload = () => {
 }
 
 function saveEmotionImage(e) {
-  const outFileName = `${e}_${window.feelings.max[e].time.replace(/:/g, '')}.png`;
+  const mTime = window.feelings.max[e].time.slice(0, -3);
+  const outFileName = `${e}_${mTime.replace(/:/g, '')}.png`;
   const defaultPath = pathResolve(getPath('desktop'), outFileName);
   const userChosenPath = dialog.showSaveDialogSync({ defaultPath: defaultPath }) || null;
   const inFilePath = pathJoin(getAppPath(), 'feelings', window.mDir, `${e}.png`);
