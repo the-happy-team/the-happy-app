@@ -27,6 +27,24 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
   return this;
 }
 
+function getEmotionPercent(e) {
+  const feelingsCount = Object.keys(window.feelings.counter).reduce((s, e) => s + window.feelings.counter[e], 0);
+  const eCount = window.feelings.values.reduce((s, v) => s + v[`${e}`], 0);
+  const ePercent = Math.round((eCount / feelingsCount) * 100) || 0;
+  return ePercent;
+}
+
+function getTotalTime() {
+  const mPhrases = translate();
+
+  const totalTimeSeconds = Math.ceil(window.feelings.duration.length / 10) * 10;
+  const totalTimeMinutes = Math.ceil(window.feelings.duration.length / 60);
+
+  const totalTime = (totalTimeSeconds > 59) ? `${totalTimeMinutes} ${mPhrases.minutes}` : `${totalTimeSeconds} ${mPhrases.seconds}`;
+
+  return totalTime;
+}
+
 window.onload = () => {
   ipcRenderer.send('restore-window');
   const mDateFormat = getDateFormatString(moment);
@@ -43,15 +61,9 @@ window.onload = () => {
   const mDateDiv = document.getElementById('my-result-date');
   const mMsgDiv = document.getElementById('my-result-message');
 
-  const feelingsCount = Object.keys(window.feelings.counter).reduce((s, e) => s + window.feelings.counter[e], 0);
-  const happyCount = window.feelings.values.reduce((s, e) => s + e.happy, 0);
-  const happyPercent = Math.round((happyCount / feelingsCount) * 100) || 0;
-
-  const totalTimeSeconds = Math.ceil(window.feelings.duration.length / 10) * 10;
-  const totalTimeMinutes = Math.ceil(window.feelings.duration.length / 60);
-
   const mPhrases = translate();
-  const totalTime = (totalTimeSeconds > 59) ? `${totalTimeMinutes} ${mPhrases.minutes}` : `${totalTimeSeconds} ${mPhrases.seconds}`;
+  const happyPercent = getEmotionPercent('happy');
+  const totalTime = getTotalTime();
 
   mDateDiv.innerHTML = moment(window.mDir, 'YYYYMMDD_HHmmss').format(mDateFormat);
   mMsgDiv.innerHTML = `${mPhrases['in']} ${totalTime} ${mPhrases['you-were']} ${happyPercent}% ${mPhrases.happy}`;
@@ -92,9 +104,11 @@ function saveEmotionDashboard(e) {
 function createDashboardCanvas(e) {
   const mPhrases = translate();
   const mDateFormat = getDateFormatString(moment);
+  const totalTime = getTotalTime();
+  const ePercent = getEmotionPercent(e);
 
-  const mMsgDiv = document.getElementById('my-result-message');
-  const mMsg = mMsgDiv.innerHTML;
+  const mMsg = `${mPhrases['in']} ${totalTime} ${mPhrases['you-were']} ${ePercent}% ${mPhrases[e]}`;
+
   const mDashMsg = mPhrases[`dash-${e}`];
   const eTime = window.feelings.max[e].time.slice(0, -3);
   const mDate = moment(eTime, 'YYYYMMDD_HHmmss').format(mDateFormat);
@@ -102,9 +116,10 @@ function createDashboardCanvas(e) {
   const colorHappy = getComputedStyle(document.documentElement).getPropertyValue('--color-happy');
   const colorText = getComputedStyle(document.documentElement).getPropertyValue('--color-text');
   const colorBgnd = getComputedStyle(document.documentElement).getPropertyValue('--color-bg');
-  const bgColor = (e == 'happy') ? colorHappy : colorText;
-  const txtColor = (e == 'happy') ? colorText : colorBgnd;
+  const bgColor = (e == 'sad') ? colorText : colorHappy;
+  const txtColor = (e == 'sad') ? colorBgnd : colorText;
 
+  const mMsgDiv = document.getElementById('my-result-message');
   const mFont = window.getComputedStyle(mMsgDiv).getPropertyValue('font-family');
   const mTextSize = 32;
   const mTextVertStart = 128;
