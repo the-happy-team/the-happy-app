@@ -30,9 +30,9 @@ function getDateFormatString(momemnt) {
   moment.locale(mLanguage);
 
   if(mLanguage === 'pt') {
-    return 'D [de] MMMM, YYYY, HH:mm';
+    return 'D [de] MMMM, YYYY – h:mm A';
   } else {
-    return 'MMMM Do, YYYY, HH:mm';
+    return 'MMMM Do, YYYY – h:mm A';
   }
 }
 
