@@ -66,6 +66,7 @@ function post(data, cb) {
 module.exports = {
   setOutDir,
   getUris,
+  saveCanvas,
   saveCanvasEmotion,
   post
 };

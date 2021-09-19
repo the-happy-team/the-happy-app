@@ -18,5 +18,7 @@
   "happy": "feliz",
   "camera": "O aplicativo vai gravar uma foto e um screenshot a cada minuto",
   "start": "começar o aplicativo",
-  "stop": "parar o aplicativo"
+  "stop": "parar o aplicativo",
+  "dash-sad": "Este é seu momento mais triste. Não tá fácil.",
+  "dash-happy": "Este é seu momento mais feliz. Que belo rosto."
 }

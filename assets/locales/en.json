@@ -18,5 +18,7 @@
   "happy": "happy",
   "camera": "The app will take a picture and a screenshot every minute",
   "start": "start the app",
-  "stop": "stop the app"
+  "stop": "stop the app",
+  "dash-sad": "This is your saddest moment. Life is hard. We know.",
+  "dash-happy": "This is your happiest moment. What a lovely face."
 }
