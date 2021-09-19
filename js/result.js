@@ -121,7 +121,7 @@ function createDashboardCanvas(e) {
 
   const mMsgDiv = document.getElementById('my-result-message');
   const mFont = window.getComputedStyle(mMsgDiv).getPropertyValue('font-family');
-  const mTextSize = 32;
+  const mTextSize = 33;
   const mTextVertStart = 128;
   const mTextFromBottom = 150;
 
