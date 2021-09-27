@@ -8,7 +8,7 @@ const pathJoin = require('path').join;
 
 window.onload = () => {
   ipcRenderer.send('restore-window');
-  translate();
+  translate(true);
 
   document.querySelectorAll('[data-language]').forEach(b => {
     b.addEventListener('click', () => {

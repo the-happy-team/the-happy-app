@@ -10,8 +10,8 @@ function setLanguage(lang) {
   translate();
 }
 
-function translate() {
-  if((localStorage.getItem('language') === null) || (localStorage.getItem('phrases') === null)) {
+function translate(force = false) {
+  if((localStorage.getItem('language') === null) || (localStorage.getItem('phrases') === null) || force) {
     setLanguage(localStorage.getItem('language') || 'en');
   } else {
     const mPhrases = JSON.parse(localStorage.getItem('phrases'));
