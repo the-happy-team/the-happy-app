@@ -59,6 +59,10 @@ html, body {
   transition: opacity .15s linear;
 }
 
+.loader-container.vertical-center {
+  margin-top: -30%;
+}
+
 .loader-container.sending {
   opacity: 1;
 }
@@ -66,7 +70,7 @@ html, body {
 .loader {
   margin: 0 auto;
   border: 3px solid var(--color-bg);
-  border-top: 3px solid #3498db;
+  border-top: 3px solid var(--color-happy);
   border-radius: 50%;
   width: 16px;
   height: 16px;
