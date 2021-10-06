@@ -124,11 +124,12 @@ function updateFeelings(detectionResult) {
   myLoader.classList.remove('sending');
   myStopButton.classList.remove('hide');
 
-  const mExpression = Object.keys(detectionResult.expressions).reduce((a, b) => {
+  const detectionExpressions = Object.keys(detectionResult.expressions);
+
+  const mExpression = detectionExpressions.reduce((a, b) => {
     return (detectionResult.expressions[a] > detectionResult.expressions[b]) ? a : b;
   }, -1);
 
-  console.log(mExpression);
   const mDate = moment().format('YYYY-MM-DD_HH:mm:ss');
   const mtime = Math.floor(Date.now() / 1000);
 
@@ -142,7 +143,7 @@ function updateFeelings(detectionResult) {
     time: mtime
   });
 
-  Object.keys(detectionResult.expressions).forEach(e => {
+  detectionExpressions.forEach(e => {
     if(!(e in window.feelings.min)) {
       window.feelings.min[e] = {
         time: mDate,
@@ -166,15 +167,15 @@ function updateFeelings(detectionResult) {
         value: detectionResult.expressions[e]
       };
     }
+
+    if(mExpression === e) {
+      saveCanvasEmotion(screenshotCanvas, e);
+    }
   });
 
   ['happy', 'sad'].forEach(e => {
     if(window.feelings.max[e].value === detectionResult.expressions[e]) {
       saveCanvasEmotion(screenshotCanvas, e, 'top');
-    }
-
-    if(mExpression === e) {
-      saveCanvasEmotion(screenshotCanvas, e);
     }
   });
 }
