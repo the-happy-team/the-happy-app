@@ -6,12 +6,14 @@ const moment = require('moment');
 
 const mDate = moment().format('YYYY-MM-DD');
 const outInfo = {};
+const ALL_FEELINGS = ['neutral', 'happy', 'sad', 'angry', 'fearful', 'disgusted', 'surprised'];
 
 function setOutDir() {
   outInfo.outDirName = mDate + '_' + moment().format('HHmmss');
   outInfo.outDirPath = pathJoin(getAppPath(), 'feelings', outInfo.outDirName);
-  mkdirSync(pathJoin(outInfo.outDirPath, 'happy'), { recursive: true });
-  mkdirSync(pathJoin(outInfo.outDirPath, 'sad'), { recursive: true });
+  ALL_FEELINGS.forEach(e => {
+    mkdirSync(pathJoin(outInfo.outDirPath, e), { recursive: true });
+  });
 }
 
 function getUris(emotion) {
