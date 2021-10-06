@@ -3,14 +3,16 @@ const faceapi = require('face-api.js');
 const path = require('path');
 const moment = require('moment');
 
+const mDEBUG = process.env.DEBUG || false;
+
 const CAM = {
   WIDTH: 1280,
   HEIGHT: 720
 };
 
 const DELAY = {
-  SHORT: 1e3,
-  LONG: 10e3
+  SHORT: (mDEBUG) ? 1e3 : 10e3,
+  LONG: (mDEBUG) ? 10e3 : 60e3
 };
 
 const drawOptions = {
