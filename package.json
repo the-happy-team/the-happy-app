@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "main": "main.js",
   "scripts": {
-    "start": "DEBUG=true electron .",
+    "start-osx": "DEBUG=true electron .",
+    "start-win": "$env:DEBUG=\"true\" electron .",
+    "pack-win": "electron-packager . the-happy-app --overwrite --platform=win32 --arch=ia32 --icon=icons/Happy.ico --prune=true --ignore=\"release|feelings|icons|.gitignore|.travis.yml\" --out=release --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"The Happy App\"",
     "pack-osx": "electron-packager . the-happy-app --overwrite --platform=darwin --arch=x64 --icon=icons/Happy.icns --prune=true --ignore=\"release|feelings|icons|.gitignore|.travis.yml\" --out=release",
     "installer-osx": "electron-installer-dmg ./release/the-happy-app-darwin-x64/the-happy-app.app the-happy-app --overwrite --icon=icons/Happy.icns --background=icons/dmg.png --out=release",
     "dmg": "npm run pack-osx; npm run installer-osx"
