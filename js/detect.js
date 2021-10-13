@@ -11,8 +11,8 @@ const CAM = {
 };
 
 const DELAY = {
-  SHORT: (mDEBUG) ? 1e3 : 10e3,
-  LONG: (mDEBUG) ? 10e3 : 60e3
+  SHORT: (mDEBUG) ? 1e3 : 2e3,
+  LONG: (mDEBUG) ? 10e3 : 15e3
 };
 
 const drawOptions = {
