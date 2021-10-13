@@ -10,20 +10,13 @@ notifications:
   email: false
 
 before_script:
-  - sudo apt-get update -y
-  - sudo apt-get install -y wine64
   - npm install
 
 script:
-  - npm run pack
+  - npm run pack-install
 
 before_deploy:
-  - mv release/the-happy-app-darwin-x64 release/the-happy-app-mac
-  - mv release/the-happy-app-linux-x64 release/the-happy-app-linux
-  - mv release/the-happy-app-win32-x64 release/the-happy-app-win
-  - tar -czf the-happy-app-mac.tar.gz the-happy-app-mac
-  - tar -czf the-happy-app-linux.tar.gz the-happy-app-linux
-  - tar -czf the-happy-app-win.tar.gz the-happy-app-win
+  - mv release/the-happy-app.dmg ./the-happy-app.dmg
   - git config --local user.name "$USER_NAME"
   - git config --local user.email "$USER_EMAIL"
   - git tag "$TRAVIS_BRANCH-$(git log --format=%h -1)"
@@ -32,9 +25,7 @@ deploy:
   provider: releases
   token: $GHTOKEN
   file:
-    - "the-happy-app-mac.tar.gz"
-    - "the-happy-app-win.tar.gz"
-    - "the-happy-app-linux.tar.gz"
+    - "the-happy-app.dmg"
   release_notes: "$TRAVIS_BRANCH: $TRAVIS_COMMIT_MESSAGE"
   target_commitish: $TRAVIS_COMMIT
   skip_cleanup: true
