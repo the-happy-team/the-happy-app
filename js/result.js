@@ -108,7 +108,7 @@ function createDashboardCanvas(e) {
   const totalTime = getTotalTime();
   const ePercent = getEmotionPercent(e);
 
-  const mMsg = `${mPhrases['in']} ${totalTime} ${mPhrases['you-were']} ${ePercent}% ${mPhrases[e]}`;
+  const mMsg = `${mPhrases['in']} ${totalTime} ${mPhrases['you-were']} ${ePercent}% ${mPhrases[e]}.`;
 
   const mDashMsg = mPhrases[`dash-${e}`];
   const eTime = window.feelings.max[e].time.slice(0, -3);
