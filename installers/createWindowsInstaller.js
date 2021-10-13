@@ -17,7 +17,7 @@ function getInstallerConfig () {
     appDirectory: path.join(outPath, 'the-happy-app-win32-ia32/'),
     authors: 'The Happy Team',
     noMsi: true,
-    outputDirectory: outPath,
+    outputDirectory: path.join(outPath, 'the-happy-app-windows-installer'),
     exe: 'the-happy-app.exe',
     setupExe: 'TheHappyAppInstaller.exe',
     setupIcon: path.join(rootPath, 'icons', 'Happy.ico')
