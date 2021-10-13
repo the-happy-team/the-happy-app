@@ -36,7 +36,7 @@
 
 .result-button {
   display: block;
-  margin: 30px 0;
+  margin: 10px 0 20px;
   padding: 4px 8px 6px;
   border-radius: 5px;
 
@@ -54,6 +54,7 @@
   justify-content: center;
   height: 18.2%;
   background-color: var(--color-happy);
+  box-sizing: border-box;
 }
 
 .result-footer > .result-list {
@@ -61,8 +62,9 @@
 }
 
 .result-restart {
-  width: 87%;
+  width: 100%;
   margin: 10px auto;
   background-color: var(--color-bg);
   color: var(--color-text);
+  box-sizing: border-box;
 }

@@ -28,7 +28,7 @@
 }
 
 .sessions-list {
-  width: 82%;
+  width: 87%;
   margin: 0 auto;  
 }
 
@@ -55,11 +55,13 @@
   justify-content: center;
   height: 18.2%;
   background-color: var(--color-happy);
+  box-sizing: border-box;
 }
 
 .sessions-restart {
-  width: 87%;
+  width: 100%;
   margin: 0 auto;
   background-color: var(--color-bg);
-  color: var(--color-text);  
+  color: var(--color-text);
+  box-sizing: border-box;
 }
