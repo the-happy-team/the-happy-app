@@ -89,10 +89,11 @@ function saveEmotionImage(e) {
   }
 }
 
-function saveEmotionDashboard(e) {
-  const dashboardCanvas = createDashboardCanvas(e);
-  const mTime = window.feelings.max[e].time.slice(0, -3);
-  const outFileName = `${e}_${mTime.replace(/:/g, '')}.png`;
+function saveEmotionDashboard(emotion) {
+  const dashboardCanvas = createDashboardCanvas(emotion);
+  const mTime = window.feelings.max[emotion].time;
+  const emotionUpper = emotion.toUpperCase();
+  const outFileName = `${emotionUpper}_${mTime.replace(/:/g, '')}.png`;
   const defaultPath = pathResolve(getPath('desktop'), outFileName);
   const userChosenPath = dialog.showSaveDialogSync({ defaultPath: defaultPath }) || null;
 
