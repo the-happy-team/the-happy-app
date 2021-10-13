@@ -7,7 +7,7 @@
     "start": "DEBUG=true electron .",
     "pack-osx": "electron-packager . the-happy-app --overwrite --platform=darwin --arch=x64 --icon=icons/Happy.icns --prune=true --ignore=\"release|feelings|icons|.gitignore|.travis.yml\" --out=release",
     "installer-osx": "electron-installer-dmg ./release/the-happy-app-darwin-x64/the-happy-app.app the-happy-app --overwrite --icon=icons/Happy.icns --out=release",
-    "pack-install": "npm run pack-osx; npm run installer-osx"
+    "dmg": "npm run pack-osx; npm run installer-osx"
   },
   "dependencies": {
     "face-api.js": "^0.22.2",

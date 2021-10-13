@@ -1,4 +1,4 @@
-.DS_S*
+.DS_Store
 node_modules
 Happy-darwin-x64*
 feelings/
