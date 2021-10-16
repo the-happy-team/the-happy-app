@@ -18,7 +18,7 @@ function getInstallerConfig () {
     authors: 'The Happy Team',
     noMsi: true,
     outputDirectory: path.join(outPath, 'the-happy-app-windows-installer'),
-    exe: 'the-happy-app.exe',
+    exe: 'The Happy App.exe',
     setupExe: 'TheHappyAppInstaller.exe',
     setupIcon: path.join(rootPath, 'icons', 'Happy.ico')
   })
