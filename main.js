@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, systemPreferences, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -51,6 +51,10 @@ function createWindow () {
     ipcMain.on('restore-window', (event, arg) => {
         win.setSize(WINDOW_SIZE.BIG.width, WINDOW_SIZE.BIG.height, true);
     });
+
+    if (systemPreferences.askForMediaAccess) {
+        systemPreferences.askForMediaAccess("camera");
+    }
 }
 
 // Some APIs can only be used after this event occurs.
