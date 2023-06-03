@@ -51,8 +51,8 @@ function saveCanvasEmotion(canvas, emotion, top) {
 function post(data, cb) {
   const endpoint = data.hasOwnProperty('feelings') ? 'feelings' : 'message';
 
-  //const url = `http://localhost:5005/${endpoint}`;
-  const url = `https://the-happy-app-api.herokuapp.com/${endpoint}`;
+  // const url = `http://localhost:5005/${endpoint}`;
+  const url = `https://the-happy-app-api.onrender.com/${endpoint}`;
   const xhr = new XMLHttpRequest();
 
   xhr.open('POST', url, true);
