@@ -23,6 +23,9 @@ jobs:
         run: |
           mv release/the-happy-app-darwin-x64 ./the-happy-app-mac
           tar -czf the-happy-app-mac.tar.gz the-happy-app-mac
+          git config --local user.name "${{ secrets.USER_NAME }}"
+          git config --local user.email "${{ secrets.USER_EMAIL }}"
+          git tag "${{ github.ref_name }}-$(git log --format=%h -1)"
 
       - name: Release
         uses: softprops/action-gh-release@v1
