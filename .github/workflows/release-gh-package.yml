@@ -24,7 +24,7 @@ jobs:
           git config --local user.name "${{ secrets.USER_NAME }}"
           git config --local user.email "${{ secrets.USER_EMAIL }}"
           TAG_NAME=${{ github.ref_name }}-$(git log --format=%h -1)
-          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_OUTPUT
           git tag $TAG_NAME
           git push origin $TAG_NAME
 
@@ -37,4 +37,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: the-happy-app-mac.tar.gz
-          tag_name: $TAG_NAME
+          tag_name: ${{ steps.tag.outputs.TAG_NAME }}
