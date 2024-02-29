@@ -13,11 +13,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
 
+      - name: Wine
+        run: |
+          sudo apt install wine64
+          sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install wine32
+
       - name: Install
         run: npm install
 
-      - name: Build
+      - name: Build OSX
         run: npm run pack-osx
+
+      - name: Build win
+        run: npm run exe
+
+      - name: Pack
+        run: |
+          mv release/the-happy-app-darwin-x64 ./the-happy-app-mac
+          tar -czf the-happy-app-mac.tar.gz the-happy-app-mac
+          mv release/the-happy-app-windows-installer/The\ Happy\ App.exe .
 
       - name: Setup Git
         id: setup
@@ -29,13 +43,10 @@ jobs:
           git tag $TAG_NAME
           git push origin $TAG_NAME
 
-      - name: Pack
-        run: |
-          mv release/the-happy-app-darwin-x64 ./the-happy-app-mac
-          tar -czf the-happy-app-mac.tar.gz the-happy-app-mac
-
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: the-happy-app-mac.tar.gz
+          files: |
+            the-happy-app-mac.tar.gz
+            The\ Happy\ App.exe
           tag_name: ${{ steps.setup.outputs.TAG_NAME }}

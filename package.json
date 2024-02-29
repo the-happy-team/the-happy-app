@@ -6,8 +6,8 @@
   "main": "main.js",
   "scripts": {
     "start": "DEBUG=true node_modules/.bin/electron .",
-    "pack-osx": "electron-packager . the-happy-app --overwrite --platform=darwin --arch=x64 --icon=icons/Happy.icns --prune=true --ignore=\"release|feelings|icons|.gitignore|.travis.yml\" --out=release",
-    "pack-win": "electron-packager . the-happy-app --overwrite --platform=win32 --arch=ia32 --icon=icons/Happy.ico --prune=true --ignore=\"release|feelings|icons|.gitignore|.travis.yml\" --out=release --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"The Happy App\"",
+    "pack-osx": "electron-packager . the-happy-app --overwrite --platform=darwin --arch=x64 --icon=icons/Happy.icns --prune=true --ignore=\"release|feelings|icons|.gitignore|.github\" --out=release",
+    "pack-win": "electron-packager . the-happy-app --overwrite --asar --platform=win32 --arch=x64 --icon=icons/Happy.ico --prune=true --ignore=\"release|feelings|icons|.gitignore|.github\" --out=release --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"The Happy App\"",
     "installer-osx": "bash installers/createMacInstaller.sh ",
     "installer-win": "node installers/createWindowsInstaller.js",
     "dmg": "npm run pack-osx; npm run installer-osx",

@@ -14,7 +14,7 @@ function getInstallerConfig () {
   const outPath = path.join(rootPath, 'release')
 
   return Promise.resolve({
-    appDirectory: path.join(outPath, 'the-happy-app-win32-ia32/'),
+    appDirectory: path.join(outPath, 'the-happy-app-win32-x64/'),
     authors: 'The Happy Team',
     noMsi: true,
     outputDirectory: path.join(outPath, 'the-happy-app-windows-installer'),
